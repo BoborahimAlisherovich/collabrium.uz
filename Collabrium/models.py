@@ -1,5 +1,31 @@
 from django.db import models
 
+
+class Space(models.Model):
+    space = models.CharField(max_length=300)
+    page_slug = models.SlugField(unique=True) 
+    image = models.URLField()
+
+    def __str__(self):
+        return f"{self.space}"
+    
+
+class Faq(models.Model):
+    title = models.CharField(max_length=300)
+    text = models.TextField()
+    page_slug = models.SlugField()
+    
+    def __str__(self):
+        return f"{self.title}"
+    
+
+
+
+
+
+
+
+
 class OurTeam(models.Model):
     name = models.TextField()
     image = models.ImageField()
