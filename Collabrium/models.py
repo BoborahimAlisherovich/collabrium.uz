@@ -4,7 +4,7 @@ from django.db import models
 class Space(models.Model):
     space = models.CharField(max_length=300)
     page_slug = models.SlugField(unique=True) 
-    image = models.URLField()
+    image = models.ImageField()
 
     def __str__(self):
         return f"{self.space}"
