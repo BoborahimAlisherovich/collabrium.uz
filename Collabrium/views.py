@@ -8,22 +8,9 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework import permissions
-from drf_yasg.views import get_schema_view
-from drf_yasg import openapi
 from .models import Space,Faq
 from .serializers import SpaceSerializer,FaqSerializer
 
-schema_view = get_schema_view(
-    openapi.Info(
-        title="Collabrium",
-        default_version='v1',
-        description="Space and Faq",
-        contact=openapi.Contact(email="collabrium@gmail.com"),
-        license=openapi.License(name="BSD License"),
-    ),
-    public=True,
-    permission_classes=(permissions.AllowAny,),
-)
 
 
 class SpaceListCreateView(APIView):
