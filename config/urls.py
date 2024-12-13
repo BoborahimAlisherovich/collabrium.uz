@@ -20,12 +20,44 @@ schema_view = get_schema_view(
     public=True,
     permission_classes=(permissions.AllowAny,),
 )
+from rest_framework.routers import DefaultRouter
+
+
 
 urlpatterns = [
     path("admin/", admin.site.urls),
     path('api-auth/', include('rest_framework.urls')),
     path('swagger/', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
-    path("api/Rezident/",RezidentSerializerViewSet.as_view({'get':'list'}),name = "rezident"),
    
+
+   # Address uchun
+path(
+    'Rezidents/',
+    RezidentSerializerViewSet.as_view({'get': 'list', 'post': 'create'}),
+),
+path(
+    'Rezidents/<int:pk>/',
+    RezidentSerializerViewSet.as_view({
+        'get': 'retrieve', 
+        'put': 'update', 
+        'patch': 'partial_update', 
+        'delete': 'destroy'
+    }),
+),
+
+# PlasticCard uchun
+path(
+    'ourteam/',
+    OurTeamSerializerViewSet.as_view({'get': 'list', 'post': 'create'}),
+),
+path(
+    'ourteam/<int:pk>/',
+    OurTeamSerializerViewSet.as_view({
+        'get': 'retrieve', 
+        'put': 'update', 
+        'patch': 'partial_update', 
+        'delete': 'destroy'
+    }),
+),
 
 ]
