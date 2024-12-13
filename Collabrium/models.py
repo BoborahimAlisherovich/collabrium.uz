@@ -41,10 +41,10 @@ class Blog(models.Model):
 
 #4
 class OurTeam(models.Model):
-    name = models.CharField(max_length=200)
-    image = models.ImageField(upload_to='OurTeam_images')
-    job = models.CharField(max_length=200)
-    description = models.TextField()
+    name = models.CharField(max_length=200,verbose_name="Имя")
+    image = models.ImageField(upload_to='OurTeam_images',verbose_name="изображение")
+    job = models.CharField(max_length=200,verbose_name="Работа")
+    description = models.TextField(verbose_name="описание")
     class Meta:
         verbose_name = _("OurTeam")
         verbose_name_plural = _("OurTeams")
@@ -55,10 +55,10 @@ class OurTeam(models.Model):
 
 #5
 class Rezident(models.Model):
-    name = models.CharField(max_length=200)
-    image = models.ImageField(upload_to='rezident_images')
-    job = models.CharField(max_length=200)
-    description = models.TextField()
+    name = models.CharField(max_length=200,verbose_name="Имя")
+    image = models.ImageField(upload_to='rezident_images',verbose_name="изображение")
+    job = models.CharField(max_length=200,verbose_name="Работа")
+    description = models.TextField(verbose_name="описание")
     class Meta:
         verbose_name = _("Rezident")
         verbose_name_plural = _("Rezidents")

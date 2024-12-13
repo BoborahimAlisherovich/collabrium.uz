@@ -40,7 +40,6 @@ urlpatterns = [
     path('faqs/<int:pk>/', FaqViewSet.as_view({'get': 'retrieve' ,'put':'update','patch':'partial_update','delete':'destroy'}), name='faq-detail'),
    
 
-   # Address uchun
 path(
     'Rezidents/',
     RezidentSerializerViewSet.as_view({'get': 'list', 'post': 'create'}),
@@ -55,7 +54,6 @@ path(
     }),
 ),
 
-# PlasticCard uchun
 path(
     'OurTeam/',
     OurTeamSerializerViewSet.as_view({'get': 'list', 'post': 'create'}),
