@@ -31,12 +31,14 @@ class Faq(models.Model):
 
 #3
 class Blog(models.Model):
-    image_cover = models.ImageField(upload_to='Blog_images')
-    date = models.DateField(auto_now_add=True)
-    title = models.CharField(max_length=200)
-    page_slug = models.SlugField()
+    image_cover = models.ImageField(upload_to='Blog_images',verbose_name="Обложка изображения")
+    date = models.DateField(auto_now_add=True,verbose_name="Дата публикации")
+    title = models.CharField(max_length=255,verbose_name="Заголовок статьи")
+    page_slug = models.SlugField(verbose_name="Слаг страницы")
+
     def __str__(self):
         return f"{self.title}"
+
 
 
 #4
