@@ -21,7 +21,7 @@ class FaqSerializer(serializers.ModelSerializer):
         fields = ['id', 'title', 'text', 'page_slug']
     
     def create(self, validated_data):
-        # Qo'shimcha o'zgartirishlar kerak bo'lsa, bu yerda amalga oshiring
+        #salom
         return Faq.objects.create(**validated_data)
 
 
