@@ -1,16 +1,17 @@
 from django.db import models
 from ckeditor.fields import RichTextField
-
-#1
 from django.utils.translation import gettext_lazy as _
 
+#1
+
 class Space(models.Model):
-    space = models.CharField(max_length=300)
-    page_slug = models.SlugField(unique=True) 
-    image = models.ImageField(upload_to='Images/space')
+    space = models.CharField(max_length=300, verbose_name="места")
+    page_slug = models.SlugField(unique=True, verbose_name="Слаг страницы") 
+    image = models.ImageField(upload_to='Images/space', verbose_name="изображение")
+
     class Meta:
-        verbose_name = _("пространства")
-        verbose_name_plural = _("пространства")
+        verbose_name = _("места")
+        verbose_name_plural = _("места")
 
     def __str__(self):
         return f"{self.space}"
@@ -18,9 +19,9 @@ class Space(models.Model):
 
 #2
 class Faq(models.Model):
-    title = models.CharField(max_length=300)
-    text = models.TextField()
-    page_slug = models.SlugField()
+    title = models.CharField(max_length=300, verbose_name="Титул")
+    text = models.TextField(verbose_name="Текст")
+    page_slug = models.SlugField(verbose_name="Слаг страницы")
 
     class Meta:
         verbose_name = _("Часто задаваемые вопросы")
