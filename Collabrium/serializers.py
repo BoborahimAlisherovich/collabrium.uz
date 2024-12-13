@@ -1,6 +1,5 @@
 from rest_framework import serializers
-from .models import OurTeam,Rezident
-from .models import Space,Faq
+from .models import OurTeam,Rezident,Space,Faq
 
 
 class SpaceSerializer(serializers.ModelSerializer):
@@ -30,31 +29,25 @@ class FaqSerializer(serializers.ModelSerializer):
 
 
 
+from rest_framework import serializers
+from .models import Rezident, OurTeam
 
-
-
-
-
-        
-class RezidentSerializer(serializers.Serializer):
+class RezidentSerializer(serializers.ModelSerializer):
     class Meta:
         model = Rezident
-        fields = '__all__'
+        fields = ['id', 'name', 'job', 'description', 'image']
 
-        def create(self, validated_data):
-            request = self.context.get('request')  
-            if request and hasattr(request, 'user'):
-                validated_data['user'] = request.user 
-            return super().create(validated_data)
-        
+    def create(self, validated_data):
+        # Qo'shimcha o'zgartirishlar kerak bo'lsa, bu yerda amalga oshiring
+        return Rezident.objects.create(**validated_data)
 
-class OurTeamSerializer(serializers.Serializer):
+
+class OurTeamSerializer(serializers.ModelSerializer):
     class Meta:
         model = OurTeam
-        fields = '__all__'
-        def create(self, validated_data):
-            request = self.context.get('request')  
-            if request and hasattr(request, 'user'):
-                validated_data['user'] = request.user 
-            return super().create(validated_data)
+        fields = ['id', 'name', 'job', 'description', 'image']
+
+    def create(self, validated_data):
+        # Qo'shimcha o'zgartirishlar kerak bo'lsa, bu yerda amalga oshiring
+        return OurTeam.objects.create(**validated_data)
 

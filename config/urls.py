@@ -34,12 +34,10 @@ urlpatterns = [
     path("admin/", admin.site.urls),
     path('api-auth/', include('rest_framework.urls')),
     path('swagger/', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
+
     path('redoc/', schema_view.with_ui('redoc', cache_timeout=0), name='schema-redoc'),
     path('spaces/<int:pk>/', SpaceViewSet.as_view({'get': 'retrieve','put':'update','patch':'partial_update','delete':'destroy'}), name='space-detail'),
     path('faqs/<int:pk>/', FaqViewSet.as_view({'get': 'retrieve' ,'put':'update','patch':'partial_update','delete':'destroy'}), name='faq-detail'),
-
-    path("api/Rezident/",RezidentSerializerViewSet.as_view({'get':'list'}),name = "rezident"),
-
    
 
    # Address uchun
@@ -59,11 +57,11 @@ path(
 
 # PlasticCard uchun
 path(
-    'ourteam/',
+    'OurTeam/',
     OurTeamSerializerViewSet.as_view({'get': 'list', 'post': 'create'}),
 ),
 path(
-    'ourteam/<int:pk>/',
+    'OurTeam/<int:pk>/',
     OurTeamSerializerViewSet.as_view({
         'get': 'retrieve', 
         'put': 'update', 

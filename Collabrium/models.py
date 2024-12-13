@@ -1,11 +1,8 @@
 from django.db import models
-<<<<<<< HEAD
 
 #1
-=======
 from django.utils.translation import gettext_lazy as _
 
->>>>>>> ab805327b3680ac7602ab51b248acbf801335054
 class Space(models.Model):
     space = models.CharField(max_length=300)
     page_slug = models.SlugField(unique=True) 
@@ -23,6 +20,7 @@ class Faq(models.Model):
     title = models.CharField(max_length=300)
     text = models.TextField()
     page_slug = models.SlugField()
+    
     class Meta:
         verbose_name = _("Faq")
         verbose_name_plural = _("Faqs")
@@ -30,7 +28,7 @@ class Faq(models.Model):
     def __str__(self):
         return f"{self.title}"
     
-    
+
 #3
 class Blog(models.Model):
     image_cover = models.ImageField(upload_to='Blog_images')
