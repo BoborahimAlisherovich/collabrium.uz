@@ -23,7 +23,7 @@ class Faq(models.Model):
 
     class Meta:
         verbose_name = _("Часто задаваемые вопросы")
-        verbose_name_plural = _("Часто задаваемые вопросыc")
+        verbose_name_plural = _("Часто задаваемые вопросы")
     
     def __str__(self):
         return f"{self.title}"
@@ -36,7 +36,7 @@ class Blog(models.Model):
     date = models.DateField(auto_now_add=True, verbose_name="Дата публикации")
     title = models.CharField(max_length=255, verbose_name="Заголовок статьи")
     page_slug = models.SlugField(unique=True, verbose_name="Слаг страницы")
-    main_title = models.TextField(verbose_name="Основной заголовок")
+    main_title = models.CharField(max_length=200,verbose_name="Основной заголовок")
     text_first = models.TextField(verbose_name="Текст 1")
     text_second = models.TextField(verbose_name="Текст 2", blank=True, null=True)
     image_first = models.ImageField(upload_to='blog_images', blank=True, null=True, verbose_name="Первое изображение")
@@ -57,7 +57,7 @@ class OurTeam(models.Model):
     description = models.TextField(verbose_name="описание")
     class Meta:
         verbose_name = _("Наша команда")
-        verbose_name_plural = _("Наша командаc")
+        verbose_name_plural = _("Наша команда")
 
     def __str__(self):
         return f"{self.name}"
@@ -71,7 +71,7 @@ class Rezident(models.Model):
     description = models.TextField(verbose_name="описание")
     class Meta:
         verbose_name = _("Резидент")
-        verbose_name_plural = _("Резидентc")
+        verbose_name_plural = _("Резидент")
 
     def __str__(self):
         return f"{self.name}"
