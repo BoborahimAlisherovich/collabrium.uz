@@ -1,16 +1,15 @@
-
-
 from django.contrib import admin
-from django.urls import path,include
+from django.urls import path, include
 from drf_yasg import openapi
 from drf_yasg.views import get_schema_view
 from rest_framework import permissions
-from rest_framework.routers import DefaultRouter
-from Collabrium.views import SpaceViewSet,FaqViewSet
-from Collabrium.views import OurTeamSerializerViewSet,RezidentSerializerViewSet
-from rest_framework.routers import DefaultRouter
-
-
+from Collabrium.views import (
+    SpaceViewSet,
+    FaqViewSet,
+    OurTeamSerializerViewSet,
+    RezidentSerializerViewSet,
+    BlogViewSet
+)
 
 schema_view = get_schema_view(
     openapi.Info(
@@ -24,49 +23,39 @@ schema_view = get_schema_view(
     permission_classes=(permissions.AllowAny,),
 )
 
-
-
-
-
 urlpatterns = [
     path("admin/", admin.site.urls),
-    path('api-auth/', include('rest_framework.urls')),
-    path('swagger/', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
+    path("api-auth/", include("rest_framework.urls")),
+    path("swagger/", schema_view.with_ui("swagger", cache_timeout=0), name="schema-swagger-ui"),
+    path("redoc/", schema_view.with_ui("redoc", cache_timeout=0), name="schema-redoc"),
 
-    path('redoc/', schema_view.with_ui('redoc', cache_timeout=0), name='schema-redoc'),
-    path('spaces',SpaceViewSet.as_view({'get': 'list', 'post': 'create'})),
-    path('spaces/<int:pk>/', SpaceViewSet.as_view({'get': 'retrieve','put':'update','patch':'partial_update','delete':'destroy'}), name='space-detail'),
-    path('faqs',FaqViewSet.as_view({'get': 'list', 'post': 'create'})),
-    path('faqs/<int:pk>/', FaqViewSet.as_view({'get': 'retrieve' ,'put':'update','patch':'partial_update','delete':'destroy'}), name='faq-detail'),
-   
+    # Space 
+    path("spaces/", SpaceViewSet.as_view({'get': 'list'})),
+    path("spaces/<int:pk>/", SpaceViewSet.as_view({
+        'get': 'retrieve',
+    }), name="space-detail"),
 
-path(
-    'Rezidents/',
-    RezidentSerializerViewSet.as_view({'get': 'list', 'post': 'create'}),
-),
-path(
-    'Rezidents/<int:pk>/',
-    RezidentSerializerViewSet.as_view({
-        'get': 'retrieve', 
-        'put': 'update', 
-        'patch': 'partial_update', 
-        'delete': 'destroy'
-    }),
-),
+    # FAQ 
+    path("faqs/", FaqViewSet.as_view({'get': 'list'})),
+    path("faqs/<int:pk>/", FaqViewSet.as_view({
+        'get': 'retrieve',
+    }), name="faq-detail"),
 
-path(
-    'OurTeam/',
-    OurTeamSerializerViewSet.as_view({'get': 'list', 'post': 'create'}),
-),
-path(
-    'OurTeam/<int:pk>/',
-    OurTeamSerializerViewSet.as_view({
-        'get': 'retrieve', 
-        'put': 'update', 
-        'patch': 'partial_update', 
-        'delete': 'destroy'
-    }),
-),
+    # Resident 
+    path("rezidents/", RezidentSerializerViewSet.as_view({'get': 'list'})),
+    path("rezidents/<int:pk>/", RezidentSerializerViewSet.as_view({
+        'get': 'retrieve',
+    })),
 
+    # OurTeam 
+    path("ourteam/", OurTeamSerializerViewSet.as_view({'get': 'list'})),
+    path("ourteam/<int:pk>/", OurTeamSerializerViewSet.as_view({
+        'get': 'retrieve',
+    })),
+
+    # Blog
+    path("blog/", BlogViewSet.as_view({'get': 'list'})),
+    path("blog/<int:pk>/", BlogViewSet.as_view({
+        'get': 'retrieve',
+    })),
 ]
-

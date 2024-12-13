@@ -31,18 +31,23 @@ class Faq(models.Model):
 
 #3
 class Blog(models.Model):
-    image_cover = models.ImageField(upload_to='Blog_images',verbose_name="Обложка изображения")
-    date = models.DateField(auto_now_add=True,verbose_name="Дата публикации")
-    title = models.CharField(max_length=255,verbose_name="Заголовок статьи")
-    page_slug = models.SlugField(unique=True,verbose_name="Слаг страницы")
+
+    image_cover = models.ImageField(upload_to='blog_images', verbose_name="Обложка изображения")
+    date = models.DateField(auto_now_add=True, verbose_name="Дата публикации")
+    title = models.CharField(max_length=255, verbose_name="Заголовок статьи")
+    page_slug = models.SlugField(unique=True, verbose_name="Слаг страницы")
+    main_title = models.TextField(verbose_name="Основной заголовок")
+    text_first = models.TextField(verbose_name="Текст 1")
+    text_second = models.TextField(verbose_name="Текст 2", blank=True, null=True)
+    image_first = models.ImageField(upload_to='blog_images', blank=True, null=True, verbose_name="Первое изображение")
+    image_second = models.ImageField(upload_to='blog_images', blank=True, null=True, verbose_name="Второе изображение")
 
     def __str__(self):
-        return f"{self.title}"
+        return self.title
+    
     class Meta:
         verbose_name = _("Блог")
         verbose_name_plural = _("Блог")
-
-
 
 #4
 class OurTeam(models.Model):
