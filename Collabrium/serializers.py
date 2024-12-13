@@ -38,3 +38,12 @@ class OurTeamSerializer(serializers.ModelSerializer):
     def create(self, validated_data):
         return OurTeam.objects.create(**validated_data)
 
+
+
+class BlogSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Rezident
+        fields = ['id', 'name', 'job', 'description', 'image']
+
+    def create(self, validated_data):
+        return Rezident.objects.create(**validated_data)
