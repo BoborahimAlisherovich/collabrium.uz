@@ -23,18 +23,46 @@ schema_view = get_schema_view(
     permission_classes=(permissions.AllowAny,),
 )
 
-router = DefaultRouter()
-router.register(r'spaces', SpaceViewSet, basename='space')
-router.register(r'faqs', FaqViewSet, basename='faq')
 
 urlpatterns = [
     path("admin/", admin.site.urls),
     path('api-auth/', include('rest_framework.urls')),
     path('swagger/', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
     path('redoc/', schema_view.with_ui('redoc', cache_timeout=0), name='schema-redoc'),
+    path('spaces',SpaceViewSet.as_view({'get': 'list', 'post': 'create'})),
     path('spaces/<int:pk>/', SpaceViewSet.as_view({'get': 'retrieve','put':'update','patch':'partial_update','delete':'destroy'}), name='space-detail'),
+    path('faqs',FaqViewSet.as_view({'get': 'list', 'post': 'create'})),
     path('faqs/<int:pk>/', FaqViewSet.as_view({'get': 'retrieve' ,'put':'update','patch':'partial_update','delete':'destroy'}), name='faq-detail'),
-    path("api/Rezident/",RezidentSerializerViewSet.as_view({'get':'list'}),name = "rezident"),
+
+
    
+
+path(
+    'Rezidents/',
+    RezidentSerializerViewSet.as_view({'get': 'list', 'post': 'create'}),
+),
+path(
+    'Rezidents/<int:pk>/',
+    RezidentSerializerViewSet.as_view({
+        'get': 'retrieve', 
+        'put': 'update', 
+        'patch': 'partial_update', 
+        'delete': 'destroy'
+    }),
+),
+
+path(
+    'ourteam/',
+    OurTeamSerializerViewSet.as_view({'get': 'list', 'post': 'create'}),
+),
+path(
+    'ourteam/<int:pk>/',
+    OurTeamSerializerViewSet.as_view({
+        'get': 'retrieve', 
+        'put': 'update', 
+        'patch': 'partial_update', 
+        'delete': 'destroy'
+    }),
+),
 
 ]

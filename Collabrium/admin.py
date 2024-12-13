@@ -1,6 +1,5 @@
 from django.contrib import admin
-from .models import Rezident
-from .models import Space, Faq
+from .models import Space, Faq,OurTeam,Rezident,Blog
 
 @admin.register(Space)
 class SpaceAdmin(admin.ModelAdmin):
@@ -18,9 +17,20 @@ class FaqAdmin(admin.ModelAdmin):
 
 
 
-    
+
 
 @admin.register(Rezident)
-class SpaceAdmin(admin.ModelAdmin):
-    list_display = ('name', 'job', 'description', 'image')
-    
+class RezidentAdmin(admin.ModelAdmin):
+    list_display = ('name', 'job', 'description', 'image') 
+    search_fields = ('name',)
+
+@admin.register(OurTeam)
+class OurTeamAdmin(admin.ModelAdmin):
+    list_display = ('name', 'job', 'description', 'image')  
+    search_fields = ('name',)  
+
+@admin.register(Blog)
+class BlogAdmin(admin.ModelAdmin):
+    list_display = ('title', 'image_cover', 'date') 
+    search_fields = ('title',) 
+    prepopulated_fields = {'page_slug': ('title',)} 
