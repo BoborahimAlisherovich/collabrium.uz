@@ -7,30 +7,24 @@ class SpaceAdmin(admin.ModelAdmin):
     search_fields = ('space', 'page_slug')
     prepopulated_fields = {'page_slug': ('space',)}
 
-
 @admin.register(Faq)
 class FaqAdmin(admin.ModelAdmin):
     list_display = ('id', 'title', 'page_slug')
     search_fields = ('title', 'page_slug')
     prepopulated_fields = {'page_slug': ('title',)}
 
-
-
-
-
-
 @admin.register(Rezident)
 class RezidentAdmin(admin.ModelAdmin):
-    list_display = ('id','name', 'job', 'description', 'image')  # Rezident modeli ustunlari
-    search_fields = ('name',)  # Tuple shaklida
+    list_display = ('id','name', 'job', 'description', 'image')
+    search_fields = ('name',)  
 
 @admin.register(OurTeam)
 class OurTeamAdmin(admin.ModelAdmin):
-    list_display = ('id','name', 'job', 'description', 'image')  # OurTeam modeli ustunlari
-    search_fields = ('name',)  # Tuple shaklida
+    list_display = ('id','name', 'job', 'description', 'image') 
+    search_fields = ('name',) 
 
 @admin.register(Blog)
 class BlogAdmin(admin.ModelAdmin):
-    list_display = ('title', 'image_cover', 'date')  # `job` o'chirildi, chunki u Blog modelida mavjud emas
-    search_fields = ('title',)  # Tuple shaklida
-    prepopulated_fields = {'page_slug': ('title',)}  # To'g'ri maydon nomi
+    list_display = ('title', 'image_cover', 'date')
+    search_fields = ('title',)
+    prepopulated_fields = {'page_slug': ('title',)}
