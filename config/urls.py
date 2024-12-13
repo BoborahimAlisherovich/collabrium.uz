@@ -8,6 +8,7 @@ from rest_framework import permissions
 from rest_framework.routers import DefaultRouter
 from Collabrium.views import SpaceViewSet,FaqViewSet
 from Collabrium.views import OurTeamSerializerViewSet,RezidentSerializerViewSet
+from rest_framework.routers import DefaultRouter
 
 
 
@@ -22,13 +23,10 @@ schema_view = get_schema_view(
     public=True,
     permission_classes=(permissions.AllowAny,),
 )
-from rest_framework.routers import DefaultRouter
 
 
 
-router = DefaultRouter()
-router.register(r'spaces', SpaceViewSet, basename='space')
-router.register(r'faqs', FaqViewSet, basename='faq')
+
 
 urlpatterns = [
     path("admin/", admin.site.urls),
@@ -36,7 +34,9 @@ urlpatterns = [
     path('swagger/', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
 
     path('redoc/', schema_view.with_ui('redoc', cache_timeout=0), name='schema-redoc'),
+    path('spaces',SpaceViewSet.as_view({'get': 'list', 'post': 'create'})),
     path('spaces/<int:pk>/', SpaceViewSet.as_view({'get': 'retrieve','put':'update','patch':'partial_update','delete':'destroy'}), name='space-detail'),
+    path('faqs',FaqViewSet.as_view({'get': 'list', 'post': 'create'})),
     path('faqs/<int:pk>/', FaqViewSet.as_view({'get': 'retrieve' ,'put':'update','patch':'partial_update','delete':'destroy'}), name='faq-detail'),
    
 
@@ -71,3 +71,4 @@ path(
 ),
 
 ]
+

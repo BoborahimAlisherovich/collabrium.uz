@@ -5,9 +5,10 @@ from .models import OurTeam,Rezident,Space,Faq
 class SpaceSerializer(serializers.ModelSerializer):
     class Meta:
         model = Space
-        fields = '__all__'
+        fields = ['id', 'space', 'page_slug', 'image']
 
     def create(self, validated_data):
+        # Qo'shimcha o'zgartirishlar kerak bo'lsa, bu yerda amalga oshiring
         return Space.objects.create(**validated_data)
 
 
@@ -15,10 +16,10 @@ class SpaceSerializer(serializers.ModelSerializer):
 class FaqSerializer(serializers.ModelSerializer):
     class Meta:
         model = Faq
-        fields = '__all__'
         fields = ['id', 'title', 'text', 'page_slug']
     
     def create(self, validated_data):
+        #salom
         return Faq.objects.create(**validated_data)
 
 
