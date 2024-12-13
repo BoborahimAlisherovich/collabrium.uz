@@ -1,4 +1,5 @@
 from django.db import models
+from ckeditor.fields import RichTextField
 
 #1
 from django.utils.translation import gettext_lazy as _
@@ -35,9 +36,9 @@ class Blog(models.Model):
     date = models.DateField(auto_now_add=True, verbose_name="Дата публикации")
     title = models.CharField(max_length=255, verbose_name="Заголовок статьи")
     page_slug = models.SlugField(unique=True, verbose_name="Слаг страницы")
-    main_title = models.TextField(verbose_name="Основной заголовок")
-    text_first = models.TextField(verbose_name="Текст 1")
-    text_second = models.TextField(verbose_name="Текст 2", blank=True, null=True)
+    main_title = models.CharField(max_length=200, verbose_name="Основной заголовок")
+    text_first = RichTextField(verbose_name="Текст 1")
+    text_second = RichTextField(verbose_name="Текст 2")
     image_first = models.ImageField(upload_to='blog_images', blank=True, null=True, verbose_name="Первое изображение")
     image_second = models.ImageField(upload_to='blog_images', blank=True, null=True, verbose_name="Второе изображение")
 
