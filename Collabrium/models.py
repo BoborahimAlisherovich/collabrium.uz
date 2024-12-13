@@ -20,7 +20,7 @@ class Faq(models.Model):
     title = models.CharField(max_length=300)
     text = models.TextField()
     page_slug = models.SlugField()
-    
+
     class Meta:
         verbose_name = _("Faq")
         verbose_name_plural = _("Faqs")
@@ -38,12 +38,17 @@ class Blog(models.Model):
     def __str__(self):
         return f"{self.title}"
 
+
 #4
 class OurTeam(models.Model):
     name = models.CharField(max_length=200)
     image = models.ImageField(upload_to='OurTeam_images')
     job = models.CharField(max_length=200)
     description = models.TextField()
+    class Meta:
+        verbose_name = _("OurTeam")
+        verbose_name_plural = _("OurTeams")
+
     def __str__(self):
         return f"{self.name}"
 
@@ -54,6 +59,10 @@ class Rezident(models.Model):
     image = models.ImageField(upload_to='rezident_images')
     job = models.CharField(max_length=200)
     description = models.TextField()
+    class Meta:
+        verbose_name = _("Rezident")
+        verbose_name_plural = _("Rezidents")
+
     def __str__(self):
         return f"{self.name}"
 
