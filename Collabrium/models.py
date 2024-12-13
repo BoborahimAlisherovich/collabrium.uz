@@ -9,8 +9,8 @@ class Space(models.Model):
     page_slug = models.SlugField(unique=True) 
     image = models.ImageField(upload_to='Images/space')
     class Meta:
-        verbose_name = _("Space")
-        verbose_name_plural = _("Spaces")
+        verbose_name = _("пространства")
+        verbose_name_plural = _("пространства")
 
     def __str__(self):
         return f"{self.space}"
@@ -23,8 +23,8 @@ class Faq(models.Model):
     page_slug = models.SlugField()
 
     class Meta:
-        verbose_name = _("Faq")
-        verbose_name_plural = _("Faqs")
+        verbose_name = _("Часто задаваемые вопросы")
+        verbose_name_plural = _("Часто задаваемые вопросы")
     
     def __str__(self):
         return f"{self.title}"
@@ -32,6 +32,7 @@ class Faq(models.Model):
 
 #3
 class Blog(models.Model):
+
     image_cover = models.ImageField(upload_to='blog_images', verbose_name="Обложка изображения")
     date = models.DateField(auto_now_add=True, verbose_name="Дата публикации")
     title = models.CharField(max_length=255, verbose_name="Заголовок статьи")
@@ -44,16 +45,20 @@ class Blog(models.Model):
 
     def __str__(self):
         return self.title
+    
+    class Meta:
+        verbose_name = _("Блог")
+        verbose_name_plural = _("Блог")
 
 #4
 class OurTeam(models.Model):
-    name = models.CharField(max_length=200)
-    image = models.ImageField(upload_to='OurTeam_images')
-    job = models.CharField(max_length=200)
-    description = models.TextField()
+    name = models.CharField(max_length=200,verbose_name="Имя")
+    image = models.ImageField(upload_to='OurTeam_images',verbose_name="изображение")
+    job = models.CharField(max_length=200,verbose_name="Работа")
+    description = models.TextField(verbose_name="описание")
     class Meta:
-        verbose_name = _("OurTeam")
-        verbose_name_plural = _("OurTeams")
+        verbose_name = _("Наша команда")
+        verbose_name_plural = _("Наша команда")
 
     def __str__(self):
         return f"{self.name}"
@@ -61,13 +66,13 @@ class OurTeam(models.Model):
 
 #5
 class Rezident(models.Model):
-    name = models.CharField(max_length=200)
-    image = models.ImageField(upload_to='rezident_images')
-    job = models.CharField(max_length=200)
-    description = models.TextField()
+    name = models.CharField(max_length=200,verbose_name="Имя")
+    image = models.ImageField(upload_to='rezident_images',verbose_name="изображение")
+    job = models.CharField(max_length=200,verbose_name="Работа")
+    description = models.TextField(verbose_name="описание")
     class Meta:
-        verbose_name = _("Rezident")
-        verbose_name_plural = _("Rezidents")
+        verbose_name = _("Резидент")
+        verbose_name_plural = _("Резидент")
 
     def __str__(self):
         return f"{self.name}"

@@ -8,7 +8,6 @@ class SpaceSerializer(serializers.ModelSerializer):
         fields = ['id', 'space', 'page_slug', 'image']
 
     def create(self, validated_data):
-        # Qo'shimcha o'zgartirishlar kerak bo'lsa, bu yerda amalga oshiring
         return Space.objects.create(**validated_data)
 
 
@@ -19,10 +18,7 @@ class FaqSerializer(serializers.ModelSerializer):
         fields = ['id', 'title', 'text', 'page_slug']
     
     def create(self, validated_data):
-        #salom
         return Faq.objects.create(**validated_data)
-
-
 
 
 class RezidentSerializer(serializers.ModelSerializer):
