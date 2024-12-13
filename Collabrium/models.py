@@ -1,11 +1,10 @@
 from django.db import models
-<<<<<<< HEAD
+
 
 #1
-=======
+
 from django.utils.translation import gettext_lazy as _
 
->>>>>>> ab805327b3680ac7602ab51b248acbf801335054
 class Space(models.Model):
     space = models.CharField(max_length=300)
     page_slug = models.SlugField(unique=True) 
