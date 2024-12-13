@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import OurTeam,Rezident,Space,Faq
+from .models import OurTeam,Rezident,Space,Faq, Blog
 
 
 class SpaceSerializer(serializers.ModelSerializer):
@@ -46,8 +46,19 @@ class OurTeamSerializer(serializers.ModelSerializer):
 
 class BlogSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Rezident
-        fields = ['id', 'name', 'job', 'description', 'image']
-
+        model = Blog
+        fields = [
+            'id', 
+            'image_cover', 
+            'date', 
+            'title', 
+            'page_slug', 
+            'main_title',
+            'text_first', 
+            'text_second', 
+            'image_first', 
+            'image_second'
+        ]
+    
     def create(self, validated_data):
-        return Rezident.objects.create(**validated_data)
+        return Blog.objects.create(**validated_data)
