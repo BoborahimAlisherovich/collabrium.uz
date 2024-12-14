@@ -80,3 +80,9 @@ class Rezident(models.Model):
 
 
 
+class Podkast(models.Model):
+    total = models.CharField(max_length=200,verbose_name="инструмент")
+    image = models.ImageField(verbose_name="изображение")
+    class Meta:
+        verbose_name = _("Подкаст")
+        verbose_name_plural = _("Подкаст")

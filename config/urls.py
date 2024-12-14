@@ -4,6 +4,10 @@ from django.urls import path, include
 from drf_yasg import openapi
 from drf_yasg.views import get_schema_view
 from rest_framework import permissions
+from django.conf import settings
+from django.conf.urls.static import static
+
+
 from Collabrium.views import (
     SpaceViewSet,
     FaqViewSet,
@@ -59,7 +63,10 @@ urlpatterns = [
     path("blog/<int:pk>/", BlogViewSet.as_view({
         'get': 'retrieve',
     })),
-    
-] + i18n_patterns(
-    path('i18n/',include('django.conf.urls.i18n'))
-)
+     # Blog
+    path("podkast/", BlogViewSet.as_view({'get': 'list'})),
+    path("blog/<int:pk>/", BlogViewSet.as_view({
+        'get': 'retrieve',
+    })),
+
+]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

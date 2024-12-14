@@ -32,6 +32,8 @@ ALLOWED_HOSTS = []
 
 INSTALLED_APPS = [
     'jazzmin',
+     'modeltranslation',
+
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
@@ -41,7 +43,9 @@ INSTALLED_APPS = [
     'Collabrium',
     'drf_yasg',
     'rest_framework',
-    'modeltranslation',
+    'ckeditor',
+    
+
 
 ]
 
@@ -138,6 +142,8 @@ LANGUAGES = [
     ("en", _("English")),
     ("ru", _("Russian")),]
 
+
+NODELTRANSLATION_DEFAULT_LANGUAGE = 'RU'
 
 LOCALE_PATHS = BASE_DIR , 'locale'
 

@@ -1,5 +1,5 @@
 from modeltranslation.translator import register, TranslationOptions
-from .models import Space, Faq, OurTeam, Rezident, Blog
+from .models import Space, Faq, OurTeam, Rezident, Blog,Podkast
 
 @register(Space)
 class SpaceTranslationOptions(TranslationOptions):
@@ -20,3 +20,7 @@ class RezidentTranslationOptions(TranslationOptions):
 @register(Blog)
 class BlogTranslationOptions(TranslationOptions):  
     fields = ('title', 'main_title', 'text_first', 'text_second') 
+
+@register(Podkast)
+class PodkastranslationOptions(TranslationOptions):  
+    fields = ('totel',)
