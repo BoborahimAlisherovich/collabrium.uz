@@ -20,6 +20,7 @@ class Space(models.Model):
         verbose_name_plural = _("Места")
 
 
+    
 #2
 class Faq(models.Model):
     title = models.CharField(max_length=300, verbose_name="Титул")
