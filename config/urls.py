@@ -1,4 +1,5 @@
 from django.contrib import admin
+from django.conf.urls.i18n import i18n_patterns
 from django.urls import path, include
 from drf_yasg import openapi
 from drf_yasg.views import get_schema_view
@@ -58,4 +59,7 @@ urlpatterns = [
     path("blog/<int:pk>/", BlogViewSet.as_view({
         'get': 'retrieve',
     })),
-]
+    
+] + i18n_patterns(
+    path('i18n/',include('django.conf.urls.i18n'))
+)
