@@ -1,20 +1,22 @@
 from modeltranslation.translator import register, TranslationOptions
-from .models import Space,Faq,OurTeam,Rezident
+from .models import Space, Faq, OurTeam, Rezident, Blog
 
 @register(Space)
 class SpaceTranslationOptions(TranslationOptions):
-    fields = ('space',)
+    fields = ('space',) 
 
 @register(Faq)
 class FaqTranslationOptions(TranslationOptions):
-    fields = ('title','text')
+    fields = ('title', 'text')
 
 @register(OurTeam)
-class OurTramTranslationOptions(TranslationOptions):
-    fields = ('name','description','job')
+class OurTeamTranslationOptions(TranslationOptions): 
+    fields = ('name', 'description', 'job') 
 
 @register(Rezident)
 class RezidentTranslationOptions(TranslationOptions):
-    fields = ('name','description','job')
+    fields = ('name', 'description', 'job') 
 
-
+@register(Blog)
+class BlogTranslationOptions(TranslationOptions):  
+    fields = ('title', 'main_title', 'text_first', 'text_second') 
