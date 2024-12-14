@@ -15,7 +15,6 @@ class Space(models.Model):
     def __str__(self):
         return f"{self.space}"
     
-
 #2
 class Faq(models.Model):
     title = models.CharField(max_length=300, verbose_name="Титул")
@@ -77,8 +76,7 @@ class Rezident(models.Model):
     def __str__(self):
         return f"{self.name}"
 
-
-
+#6
 class Podkast(models.Model):
     total = models.CharField(max_length=200,verbose_name="инструмент")
     image = models.ImageField(verbose_name="изображение")

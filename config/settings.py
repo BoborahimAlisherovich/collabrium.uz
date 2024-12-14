@@ -33,7 +33,6 @@ ALLOWED_HOSTS = []
 INSTALLED_APPS = [
     'jazzmin',
      'modeltranslation',
-
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
@@ -43,10 +42,7 @@ INSTALLED_APPS = [
     'Collabrium',
     'drf_yasg',
     'rest_framework',
-    'ckeditor',
-    
-
-
+    'ckeditor',   
 ]
 
 MIDDLEWARE = [
@@ -126,13 +122,10 @@ AUTH_PASSWORD_VALIDATORS = [
 
 # Internationalization
 # https://docs.djangoproject.com/en/5.1/topics/i18n/
-
-LANGUAGE_CODE = "ru"
-
+LANGUAGE_CODE = "ru-ru"
 TIME_ZONE = 'Asia/Tashkent'
 
 USE_I18N = True
-
 USE_TZ = True
 
 from django.utils.translation import gettext_lazy as _
@@ -140,12 +133,12 @@ from django.utils.translation import gettext_lazy as _
 LANGUAGES = [
     ("uz", _("Uzbek")),
     ("en", _("English")),
-    ("ru", _("Russian")),]
+    ("ru", _("Russian")),
+]
 
+MODELTRANSLATION_DEFAULT_LANGUAGE = 'ru'
 
-NODELTRANSLATION_DEFAULT_LANGUAGE = 'ru'
-
-LOCALE_PATHS = BASE_DIR , 'locale'
+LOCALE_PATHS = (BASE_DIR / 'locale',)
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
