@@ -13,7 +13,8 @@ from Collabrium.views import (
     FaqViewSet,
     OurTeamSerializerViewSet,
     RezidentSerializerViewSet,
-    BlogViewSet
+    BlogViewSet,
+    PodkastViewSet
 )
 
 schema_view = get_schema_view(
@@ -64,8 +65,8 @@ urlpatterns = [
         'get': 'retrieve',
     })),
      # Blog
-    path("podkast/", BlogViewSet.as_view({'get': 'list'})),
-    path("blog/<int:pk>/", BlogViewSet.as_view({
+    path("podkast/", PodkastViewSet.as_view({'get': 'list'})),
+    path("podkast/<int:pk>/", PodkastViewSet.as_view({
         'get': 'retrieve',
     })),
 

@@ -3,7 +3,6 @@ from ckeditor.fields import RichTextField
 from django.utils.translation import gettext_lazy as _
 
 #1
-
 class Space(models.Model):
     space = models.CharField(max_length=300, verbose_name="места")
     page_slug = models.SlugField(unique=True, verbose_name="Слаг страницы") 
