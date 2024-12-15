@@ -64,7 +64,7 @@ urlpatterns = [
     path("blog/<int:pk>/", BlogViewSet.as_view({
         'get': 'retrieve',
     })),
-     # Blog
+     # Podkast
     path("podkast/", PodkastViewSet.as_view({'get': 'list'})),
     path("podkast/<int:pk>/", PodkastViewSet.as_view({
         'get': 'retrieve',
