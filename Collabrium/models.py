@@ -67,6 +67,12 @@ class Rezident(models.Model):
     def __str__(self):
         return f"{self.name}"
 
+
+
+from django.db import models
+from django.utils.translation import gettext_lazy as _
+
+# Podkast modeli
 class Podkast(models.Model):
     total = models.CharField(max_length=200, verbose_name="инструмент")
     image = models.ImageField(upload_to="Images/podkast", verbose_name="изображение")
@@ -79,15 +85,15 @@ class Podkast(models.Model):
         verbose_name_plural = _("Подкасты")
 
 
-
+# Space modeli
 class Space(models.Model):
     space = models.CharField(max_length=300, verbose_name="места")
     page_slug = models.SlugField(unique=True, verbose_name="Слаг страницы")
-    image = models.ImageField(upload_to='Images/space', verbose_name="изображение")
+    image = models.ImageField(upload_to="Images/space", verbose_name="изображение")
     is_potkast = models.BooleanField(default=False, verbose_name="Это подкаст")
 
     def save(self, *args, **kwargs):
-        # `_prevent_save` flagi yordamida saqlashni to'xtatamiz
+        # Saqlashni to'xtatish uchun flag tekshiriladi
         if getattr(self, '_prevent_save', False):
             return
         super().save(*args, **kwargs)
@@ -99,23 +105,16 @@ class Space(models.Model):
         verbose_name = _("Место")
         verbose_name_plural = _("Места")
 
-
 from django.db.models.signals import pre_save
 from django.dispatch import receiver
-from django.core.exceptions import ValidationError
 from .models import Space, Podkast
 
 @receiver(pre_save, sender=Space)
 def save_to_podkast_instead_of_space(sender, instance, **kwargs):
-    """
-    Agar is_potkast=True bo'lsa, ma'lumot Podkast modeliga saqlanadi,
-    va Space modelga saqlanish bekor qilinadi.
-    """
+ 
     if instance.is_potkast:
-        # Podkast modeliga ma'lumotni saqlaymiz
         Podkast.objects.get_or_create(
-            total=instance.space,
-            image=instance.image
+            total=instance.space,  
+            image=instance.image   
         )
-        # Saqlashni to'xtatish uchun flag o'rnatamiz
         instance._prevent_save = True

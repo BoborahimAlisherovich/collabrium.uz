@@ -10,9 +10,10 @@ def img(self, obj):
 
 @admin.register(Space)
 class SpaceAdmin(admin.ModelAdmin):
-    list_display = ('id', 'space', 'page_slug','img')
+    list_display = ('id', 'space', 'page_slug','img','is_potkast')
     search_fields = ('space', 'page_slug')
     prepopulated_fields = {'page_slug': ('space',)}
+    list_filter = ('is_potkast',)
     def img(self, obj):
          return format_html('<img width="100" height="100" src="{}" />'.format(obj.image.url))
 

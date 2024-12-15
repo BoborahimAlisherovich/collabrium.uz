@@ -11,7 +11,8 @@ class SpaceSerializer(serializers.ModelSerializer):
             'space_en', 
             'space_ru', 
             'page_slug', 
-            'image']
+            'image',
+            'is_potkast']
 
     def create(self, validated_data):
         return Space.objects.create(**validated_data)
