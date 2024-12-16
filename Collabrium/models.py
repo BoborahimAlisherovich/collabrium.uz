@@ -1,14 +1,12 @@
 from django.db import models
 from ckeditor.fields import RichTextField
 from django.utils.translation import gettext_lazy as _
-from django.db.models.signals import post_save,pre_save
-from django.core.exceptions import ValidationError
-from django.dispatch import receiver
+from django.utils.text import slugify
+from unidecode import unidecode
 
-    
 #2
 class Faq(models.Model):
-    title = models.CharField(max_length=300, verbose_name="Титул")
+    title = models.CharField(max_length=300, verbose_name="Заголовок")
     text = models.TextField(verbose_name="Текст")
     page_slug = models.SlugField(verbose_name="Слаг страницы")
 
@@ -79,43 +77,19 @@ class Podkast(models.Model):
         verbose_name_plural = _("Подкасты")
 
 
-
 class Space(models.Model):
-    space = models.CharField(max_length=300, verbose_name="места")
-    page_slug = models.SlugField(unique=True, verbose_name="Слаг страницы")
+    space = models.CharField(max_length=300, verbose_name="зоны")
+    page_slug = models.SlugField(unique=True, blank=True, verbose_name="Слаг страницы",editable=False) 
     image = models.ImageField(upload_to='Images/space', verbose_name="изображение")
-    is_potkast = models.BooleanField(default=False, verbose_name="Это подкаст")
 
     def save(self, *args, **kwargs):
-        # `_prevent_save` flagi yordamida saqlashni to'xtatamiz
-        if getattr(self, '_prevent_save', False):
-            return
+        self.page_slug = slugify(unidecode(self.space))
         super().save(*args, **kwargs)
 
     def __str__(self):
         return self.space
 
     class Meta:
-        verbose_name = _("Место")
-        verbose_name_plural = _("Места")
+        verbose_name = _("Зоны")
+        verbose_name_plural = _("Зоны")
 
-
-from django.db.models.signals import pre_save
-from django.dispatch import receiver
-from django.core.exceptions import ValidationError
-from .models import Space, Podkast
-
-@receiver(pre_save, sender=Space)
-def save_to_podkast_instead_of_space(sender, instance, **kwargs):
-    """
-    Agar is_potkast=True bo'lsa, ma'lumot Podkast modeliga saqlanadi,
-    va Space modelga saqlanish bekor qilinadi.
-    """
-    if instance.is_potkast:
-        # Podkast modeliga ma'lumotni saqlaymiz
-        Podkast.objects.get_or_create(
-            total=instance.space,
-            image=instance.image
-        )
-        # Saqlashni to'xtatish uchun flag o'rnatamiz
-        instance._prevent_save = True

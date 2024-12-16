@@ -12,7 +12,7 @@ def img(self, obj):
 class SpaceAdmin(admin.ModelAdmin):
     list_display = ('id', 'space', 'page_slug','img')
     search_fields = ('space', 'page_slug')
-    prepopulated_fields = {'page_slug': ('space',)}
+    readonly_fields=('page_slug',)
     def img(self, obj):
          return format_html('<img width="100" height="100" src="{}" />'.format(obj.image.url))
 
