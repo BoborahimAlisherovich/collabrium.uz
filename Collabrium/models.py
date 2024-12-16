@@ -65,6 +65,12 @@ class Rezident(models.Model):
     def __str__(self):
         return f"{self.name}"
 
+
+
+from django.db import models
+from django.utils.translation import gettext_lazy as _
+
+# Podkast modeli
 class Podkast(models.Model):
     total = models.CharField(max_length=200, verbose_name="инструмент")
     image = models.ImageField(upload_to="Images/podkast", verbose_name="изображение")
@@ -92,4 +98,3 @@ class Space(models.Model):
     class Meta:
         verbose_name = _("Зоны")
         verbose_name_plural = _("Зоны")
-

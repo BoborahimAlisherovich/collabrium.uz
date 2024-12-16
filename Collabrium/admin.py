@@ -10,7 +10,7 @@ def img(self, obj):
 
 @admin.register(Space)
 class SpaceAdmin(admin.ModelAdmin):
-    list_display = ('id', 'space', 'page_slug','img')
+    list_display = ('id', 'space', 'page_slug','img','is_potkast')
     search_fields = ('space', 'page_slug')
     readonly_fields=('page_slug',)
     def img(self, obj):
