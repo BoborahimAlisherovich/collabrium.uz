@@ -7,7 +7,7 @@ from unidecode import unidecode
 #2
 class Faq(models.Model):
     title = models.CharField(max_length=300, verbose_name="Заголовок")
-    text = models.TextField(verbose_name="Текст")
+    text = RichTextField(verbose_name="Текст")
     page_slug = models.SlugField(verbose_name="Слаг страницы")
 
     class Meta:
