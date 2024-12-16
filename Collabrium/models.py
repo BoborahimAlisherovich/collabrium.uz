@@ -65,9 +65,14 @@ class Rezident(models.Model):
         return f"{self.name}"
 
 class Space(models.Model):
-    space = models.CharField(max_length=300, verbose_name="места")
-    page_slug = models.SlugField(unique=True, verbose_name="Слаг страницы", editable=True)  # Tahrirlash taqiqlangan
+    space = models.CharField(max_length=300, verbose_name="зоны")
+    page_slug = models.SlugField(unique=True, blank=True, verbose_name="Слаг страницы",editable=False) 
     image = models.ImageField(upload_to='Images/space', verbose_name="изображение")
+
+    def save(self, *args, **kwargs):
+        self.page_slug = slugify(unidecode(self.space))
+        super().save(*args, **kwargs)
+
     class Meta:
         verbose_name = _("Зоны")
         verbose_name_plural = _("Зоны")
@@ -91,15 +96,3 @@ class Jihoz(models.Model):
         verbose_name_plural = _("Подкасты")
 
 
-class Space(models.Model):
-    space = models.CharField(max_length=300, verbose_name="зоны")
-    page_slug = models.SlugField(unique=True, blank=True, verbose_name="Слаг страницы",editable=False) 
-    image = models.ImageField(upload_to='Images/space', verbose_name="изображение")
-
-    def save(self, *args, **kwargs):
-        self.page_slug = slugify(unidecode(self.space))
-        super().save(*args, **kwargs)
-
-    class Meta:
-        verbose_name = _("Зоны")
-        verbose_name_plural = _("Зоны")

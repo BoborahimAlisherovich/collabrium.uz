@@ -9,7 +9,7 @@ def img(self, obj):
 
 class JihozInline(admin.TabularInline):
     model = Jihoz 
-    fields = ("total","total_uz","total_ru","total_en", "img")
+    fields = ("total","total_uz","total_ru","total_en", "image")
     verbose_name = "Инструмент"
     verbose_name_plural = "Инструмент"
 
