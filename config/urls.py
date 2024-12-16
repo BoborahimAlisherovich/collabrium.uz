@@ -14,7 +14,7 @@ from Collabrium.views import (
     OurTeamSerializerViewSet,
     RezidentSerializerViewSet,
     BlogViewSet,
-    PodkastViewSet
+    # JihozViewSet
 )
 
 schema_view = get_schema_view(
@@ -64,10 +64,10 @@ urlpatterns = [
     path("blog/<int:pk>/", BlogViewSet.as_view({
         'get': 'retrieve',
     })),
-     # Podkast
-    path("podkast/", PodkastViewSet.as_view({'get': 'list'})),
-    path("podkast/<int:pk>/", PodkastViewSet.as_view({
-        'get': 'retrieve',
-    })),
+    #  # Podkast
+    # path("podkast/", JihozViewSet.as_view({'get': 'list'})),
+    # path("podkast/<int:pk>/", JihozViewSet.as_view({
+    #     'get': 'retrieve',
+    # })),
 
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

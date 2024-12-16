@@ -1,8 +1,8 @@
 from django.shortcuts import render
 from rest_framework import viewsets,permissions
 from rest_framework import permissions
-from .serializers import RezidentSerializer,OurTeamSerializer, SpaceSerializer,FaqSerializer, BlogSerializer,PodkastSerializer
-from .models import Space,Faq,OurTeam,Rezident, Blog,Podkast
+from .serializers import RezidentSerializer,OurTeamSerializer, SpaceSerializer,FaqSerializer, BlogSerializer
+from .models import Space,Faq,OurTeam,Rezident, Blog
 
 
 class SpaceViewSet(viewsets.ModelViewSet):
@@ -43,9 +43,9 @@ class BlogViewSet(viewsets.ModelViewSet):
     def get_queryset(self):
         return Blog.objects.filter()
     
-class PodkastViewSet(viewsets.ModelViewSet):
-    serializer_class = PodkastSerializer
-    permission_classes = [permissions.IsAuthenticated]
+# class JihozViewSet(viewsets.ModelViewSet):
+#     serializer_class = JihozSerializer
+#     permission_classes = [permissions.IsAuthenticated]
 
-    def get_queryset(self):
-        return Podkast.objects.filter()
+#     def get_queryset(self):
+#         return Jihoz.objects.filter()

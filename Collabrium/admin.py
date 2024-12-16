@@ -1,21 +1,35 @@
 from django.contrib import admin
-from .models import Space, Faq,OurTeam,Rezident,Blog,Podkast
+from .models import Space, Faq,OurTeam,Rezident,Blog,Jihoz
 from django.utils.html import format_html
 
 def img(self, obj):
-    if obj.image:  # Rasm mavjudligini tekshirish
+    if obj.image:  
         return format_html('<img width="100" height="100" src="{}" />'.format(obj.image.url))
     return "No Image"
 
+class JihozInline(admin.TabularInline):
+    model = Jihoz 
+    fields = ("total","total_uz","total_ru","total_en", "img")
+    verbose_name = "Инструмент"
+    verbose_name_plural = "Инструмент"
 
 @admin.register(Space)
 class SpaceAdmin(admin.ModelAdmin):
-    list_display = ('id', 'space', 'page_slug','img','is_potkast')
+    list_display = ('space', 'page_slug', 'image')
     search_fields = ('space', 'page_slug')
-    prepopulated_fields = {'page_slug': ('space',)}
-    list_filter = ('is_potkast',)
+    readonly_fields = ('page_slug',)
+    
+    inlines = [JihozInline]
+    
+    fieldsets = (
+        ("Основная информация", {
+            "fields": ("space", "space_uz", "space_ru", "space_en", "image", "page_slug"),
+        }),
+    )
+
     def img(self, obj):
-         return format_html('<img width="100" height="100" src="{}" />'.format(obj.image.url))
+        return format_html('<img width="100" height="100" src="{}" />'.format(obj.image.url))
+
 
 @admin.register(Faq)
 class FaqAdmin(admin.ModelAdmin):
@@ -43,12 +57,15 @@ class BlogAdmin(admin.ModelAdmin):
     search_fields = ('title',)
     prepopulated_fields = {'page_slug': ('title',)}
 
-@admin.register(Podkast)
-class PodkastAdmin(admin.ModelAdmin):
-    list_display = ('id','total', 'img')
-    search_fields = ('total',)
-    def img(self, obj):
-         return format_html('<img width="100" height="100" src="{}" />'.format(obj.image.url))
-   
+# @admin.register(Jihoz)
+# class PodkastAdmin(admin.ModelAdmin):
+#     model = Jihoz
+#     extra = 1  
+#     min_num = 1  
+#     fields = ("total", "image")
+#     verbose_name = "Jihoz"
+#     verbose_name_plural = "Jihozlar"
 
-    
+ 
+#     def img(self, obj):
+#          return format_html('<img width="100" height="100" src="{}" />'.format(obj.image.url))

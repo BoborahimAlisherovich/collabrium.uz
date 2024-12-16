@@ -1,11 +1,7 @@
 from django.db import models
 from ckeditor.fields import RichTextField
 from django.utils.translation import gettext_lazy as _
-from django.db.models.signals import post_save,pre_save
-from django.core.exceptions import ValidationError
-from django.dispatch import receiver
-
-    
+  
 #2
 class Faq(models.Model):
     title = models.CharField(max_length=300, verbose_name="Титул")
@@ -22,7 +18,6 @@ class Faq(models.Model):
 
 #3
 class Blog(models.Model):
-
     image_cover = models.ImageField(upload_to='blog_images', verbose_name="Обложка изображения")
     date = models.DateField(auto_now_add=True, verbose_name="Дата публикации")
     title = models.CharField(max_length=255, verbose_name="Заголовок статьи")
@@ -67,13 +62,22 @@ class Rezident(models.Model):
     def __str__(self):
         return f"{self.name}"
 
+class Space(models.Model):
+    space = models.CharField(max_length=300, verbose_name="места")
+    page_slug = models.SlugField(unique=True, verbose_name="Слаг страницы", editable=True)  # Tahrirlash taqiqlangan
+    image = models.ImageField(upload_to='Images/space', verbose_name="изображение")
+    class Meta:
+        verbose_name = _("Зоны")
+        verbose_name_plural = _("Зоны")
 
 
-from django.db import models
-from django.utils.translation import gettext_lazy as _
-
-# Podkast modeli
-class Podkast(models.Model):
+class Jihoz(models.Model):
+    space = models.ForeignKey(
+        Space, 
+        on_delete=models.CASCADE, 
+        related_name="jihozlar", 
+        verbose_name="Связанное пространство"
+    )
     total = models.CharField(max_length=200, verbose_name="инструмент")
     image = models.ImageField(upload_to="Images/podkast", verbose_name="изображение")
 
@@ -85,36 +89,7 @@ class Podkast(models.Model):
         verbose_name_plural = _("Подкасты")
 
 
-# Space modeli
-class Space(models.Model):
-    space = models.CharField(max_length=300, verbose_name="места")
-    page_slug = models.SlugField(unique=True, verbose_name="Слаг страницы")
-    image = models.ImageField(upload_to="Images/space", verbose_name="изображение")
-    is_potkast = models.BooleanField(default=False, verbose_name="Это подкаст")
 
-    def save(self, *args, **kwargs):
-        # Saqlashni to'xtatish uchun flag tekshiriladi
-        if getattr(self, '_prevent_save', False):
-            return
-        super().save(*args, **kwargs)
 
-    def __str__(self):
-        return self.space
 
-    class Meta:
-        verbose_name = _("Место")
-        verbose_name_plural = _("Места")
-
-from django.db.models.signals import pre_save
-from django.dispatch import receiver
-from .models import Space, Podkast
-
-@receiver(pre_save, sender=Space)
-def save_to_podkast_instead_of_space(sender, instance, **kwargs):
- 
-    if instance.is_potkast:
-        Podkast.objects.get_or_create(
-            total=instance.space,  
-            image=instance.image   
-        )
-        instance._prevent_save = True
+   

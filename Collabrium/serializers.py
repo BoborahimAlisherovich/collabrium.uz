@@ -1,8 +1,20 @@
 from rest_framework import serializers
-from .models import OurTeam,Rezident,Space,Faq, Blog,Podkast
+from .models import OurTeam,Rezident,Space,Faq, Blog,Jihoz
 
+
+class JihozSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Jihoz
+        fields = [
+            'id',
+            'total_uz',
+            'total_en',
+            'total_ru',
+            'image'
+        ]
 
 class SpaceSerializer(serializers.ModelSerializer):
+    jihozlar = JihozSerializer(many=True)
     class Meta:
         model = Space
         fields = [
@@ -12,10 +24,7 @@ class SpaceSerializer(serializers.ModelSerializer):
             'space_ru', 
             'page_slug', 
             'image',
-            'is_potkast']
-
-    def create(self, validated_data):
-        return Space.objects.create(**validated_data)
+            'jihozlar']
 
 
 class FaqSerializer(serializers.ModelSerializer):
@@ -101,16 +110,7 @@ class RezidentSerializer(serializers.ModelSerializer):
         return Rezident.objects.create(**validated_data)
 
 
-class PodkastSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Podkast
-        fields = [
-            'id',
-            'total_uz',
-            'total_en',
-            'total_ru',
-            'image',
-        ]
+
 
 
 
