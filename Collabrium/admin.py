@@ -17,6 +17,7 @@ class JihozInline(admin.TabularInline):
 class SpaceAdmin(admin.ModelAdmin):
     list_display = ('space', 'page_slug', 'image')
     search_fields = ('space', 'page_slug')
+
     readonly_fields = ('page_slug',)
     
     inlines = [JihozInline]
@@ -26,6 +27,7 @@ class SpaceAdmin(admin.ModelAdmin):
             "fields": ("space", "space_uz", "space_ru", "space_en", "image", "page_slug"),
         }),
     )
+
 
     def img(self, obj):
         return format_html('<img width="100" height="100" src="{}" />'.format(obj.image.url))
@@ -56,16 +58,3 @@ class BlogAdmin(admin.ModelAdmin):
     list_display = ('title', 'image_cover', 'date')
     search_fields = ('title',)
     prepopulated_fields = {'page_slug': ('title',)}
-
-# @admin.register(Jihoz)
-# class PodkastAdmin(admin.ModelAdmin):
-#     model = Jihoz
-#     extra = 1  
-#     min_num = 1  
-#     fields = ("total", "image")
-#     verbose_name = "Jihoz"
-#     verbose_name_plural = "Jihozlar"
-
- 
-#     def img(self, obj):
-#          return format_html('<img width="100" height="100" src="{}" />'.format(obj.image.url))

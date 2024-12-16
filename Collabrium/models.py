@@ -1,10 +1,12 @@
 from django.db import models
 from ckeditor.fields import RichTextField
 from django.utils.translation import gettext_lazy as _
-  
+from django.utils.text import slugify
+from unidecode import unidecode
+
 #2
 class Faq(models.Model):
-    title = models.CharField(max_length=300, verbose_name="Титул")
+    title = models.CharField(max_length=300, verbose_name="Заголовок")
     text = models.TextField(verbose_name="Текст")
     page_slug = models.SlugField(verbose_name="Слаг страницы")
 
@@ -89,7 +91,15 @@ class Jihoz(models.Model):
         verbose_name_plural = _("Подкасты")
 
 
+class Space(models.Model):
+    space = models.CharField(max_length=300, verbose_name="зоны")
+    page_slug = models.SlugField(unique=True, blank=True, verbose_name="Слаг страницы",editable=False) 
+    image = models.ImageField(upload_to='Images/space', verbose_name="изображение")
 
+    def save(self, *args, **kwargs):
+        self.page_slug = slugify(unidecode(self.space))
+        super().save(*args, **kwargs)
 
-
-   
+    class Meta:
+        verbose_name = _("Зоны")
+        verbose_name_plural = _("Зоны")
