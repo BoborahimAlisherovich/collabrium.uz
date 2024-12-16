@@ -21,7 +21,7 @@ class Faq(models.Model):
 #3
 class Blog(models.Model):
     image_cover = models.ImageField(upload_to='blog_images', verbose_name="Обложка изображения")
-    date = models.DateField(auto_now_add=True, verbose_name="Дата публикации")
+    date = models.DateField(auto_now_add=False, verbose_name="Дата публикации")
     title = models.CharField(max_length=255, verbose_name="Заголовок статьи")
     page_slug = models.SlugField(unique=True, verbose_name="Слаг страницы")
     main_title = models.CharField(max_length=200, verbose_name="Основной заголовок")
