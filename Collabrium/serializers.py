@@ -2,19 +2,27 @@ from rest_framework import serializers
 from .models import OurTeam,Rezident,Space,Faq, Blog,Jihoz
 
 
+from rest_framework import serializers
+from .models import Jihoz
+
 class JihozSerializer(serializers.ModelSerializer):
+    equipment_uz = serializers.CharField(source='total_uz') 
+    equipment_en = serializers.CharField(source='total_en')  
+    equipment_ru = serializers.CharField(source='total_ru')  
+
     class Meta:
         model = Jihoz
         fields = [
             'id',
-            'total_uz',
-            'total_en',
-            'total_ru',
+            'equipment_uz',
+            'equipment_en',
+            'equipment_ru',
             'image'
         ]
 
 class SpaceSerializer(serializers.ModelSerializer):
-    jihozlar = JihozSerializer(many=True)
+    equipments = JihozSerializer(many=True, source='jihozlar')  # Rename jihozlar to equipments
+    
     class Meta:
         model = Space
         fields = [
@@ -24,7 +32,8 @@ class SpaceSerializer(serializers.ModelSerializer):
             'space_ru', 
             'page_slug', 
             'image',
-            'jihozlar']
+            'equipments' 
+        ]
 
 
 class FaqSerializer(serializers.ModelSerializer):
