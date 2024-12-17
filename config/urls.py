@@ -14,7 +14,6 @@ from Collabrium.views import (
     OurTeamSerializerViewSet,
     RezidentSerializerViewSet,
     BlogViewSet,
-    # JihozViewSet
 )
 
 schema_view = get_schema_view(

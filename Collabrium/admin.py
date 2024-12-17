@@ -36,7 +36,7 @@ class SpaceAdmin(admin.ModelAdmin):
 @admin.register(Faq)
 class FaqAdmin(admin.ModelAdmin):
     list_display = ('id', 'title', 'page_slug')
-    search_fields = ('title', 'page_slug')
+    readonly_fields = ('page_slug',)
     prepopulated_fields = {'page_slug': ('title',)}
 
 @admin.register(Rezident)
@@ -57,4 +57,4 @@ class OurTeamAdmin(admin.ModelAdmin):
 class BlogAdmin(admin.ModelAdmin):
     list_display = ('title', 'image_cover', 'date')
     search_fields = ('title',)
-    prepopulated_fields = {'page_slug': ('title',)}
+    readonly_fields = ('page_slug',)
