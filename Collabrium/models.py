@@ -104,4 +104,22 @@ class Jihoz(models.Model):
         verbose_name = _("Подкаст")
         verbose_name_plural = _("Подкасты")
 
+class MinFaq(models.Model):
+    space = models.ForeignKey(
+        Space, 
+        on_delete=models.CASCADE, 
+        related_name="minfaq", 
+        verbose_name="вопросы"
+    )
+    title = models.CharField(max_length=300, verbose_name="Заголовок")
+    text = RichTextField(verbose_name="Текст")
+
+    def __str__(self):
+          return self.title
+
+    class Meta:
+        verbose_name = _("вопросы вопросы")
+        verbose_name_plural = _("вопросы вопросы")
+
+
 
