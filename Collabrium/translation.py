@@ -24,3 +24,5 @@ class NewsTranslationOptions(TranslationOptions):
 @register(Jihoz)
 class NewsTranslationOptions(TranslationOptions):  
     fields = ('total',)
+
+

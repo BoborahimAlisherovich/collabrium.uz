@@ -17,29 +17,9 @@ class JihozSerializer(serializers.ModelSerializer):
             'image'
         ]
 
-# class MinFaqSerializer(serializers.ModelSerializer):
-#     faq_title_uz = serializers.CharField(source='title_uz') 
-#     faq_title_en = serializers.CharField(source='title_en')  
-#     faq_title_ru = serializers.CharField(source='title_ru')  
-#     faq_text_uz = serializers.CharField(source='text_uz')
-#     faq_text_en = serializers.CharField(source='text_en')
-#     faq_text_ru = serializers.CharField(source='text_ru')
-
-#     class Meta:
-#         model = MinFaq
-#         fields = [
-#             'id',
-#             'faq_title_uz',
-#             'faq_title_en',
-#             'faq_title_ru',
-#             'faq_text_uz',
-#             'faq_text_en',
-#             'faq_text_ru',
-#         ]
 
 class SpaceSerializer(serializers.ModelSerializer):
     equipments = JihozSerializer(many=True, source='jihozlar') 
-    faq = JihozSerializer(many=True, source='minfaq')
     
     class Meta:
         model = Space
@@ -51,7 +31,6 @@ class SpaceSerializer(serializers.ModelSerializer):
             'page_slug', 
             'image',
             'equipments',
-            'faq',
         ]
 
 

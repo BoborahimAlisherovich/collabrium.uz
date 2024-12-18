@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Space, Faq,OurTeam,Rezident,Blog,Jihoz,MinFaq
+from .models import Space, Faq,OurTeam,Rezident,Blog,Jihoz
 from django.utils.html import format_html
 
 def img(self, obj):
@@ -14,11 +14,6 @@ class JihozInline(admin.TabularInline):
     verbose_name_plural = "Инструмент"
 
 
-class MinFaqInline(admin.TabularInline):
-    model =  MinFaq
-    fields = ('title','text',)
-    verbose_name = "Часто задаваемые вопросы"
-    verbose_name_plural = "Часто задаваемые вопросы"
 
 @admin.register(Space)
 class SpaceAdmin(admin.ModelAdmin):
@@ -27,7 +22,7 @@ class SpaceAdmin(admin.ModelAdmin):
 
     readonly_fields = ('page_slug',)
     
-    inlines = [JihozInline, MinFaqInline]
+    inlines = [JihozInline]
     
     fieldsets = (
         ("Основная информация", {
