@@ -1,8 +1,9 @@
 from django.shortcuts import render
 from rest_framework import viewsets,permissions
 from rest_framework import permissions
-from .serializers import RezidentSerializer,OurTeamSerializer, SpaceSerializer,FaqSerializer, BlogSerializer
-from .models import Space,Faq,OurTeam,Rezident, Blog
+from .serializers import RezidentSerializer,OurTeamSerializer, SpaceSerializer,FaqSerializer, BlogSerializer,TariffSerializer
+from .models import Space,Faq,OurTeam,Rezident, Blog,Tarif
+from rest_framework.response import Response
 
 
 class SpaceViewSet(viewsets.ModelViewSet):
@@ -34,18 +35,42 @@ class RezidentSerializerViewSet(viewsets.ModelViewSet):
 
     def get_queryset(self):
         return Rezident.objects.filter()
+# Tariff View
 
-  
-class BlogViewSet(viewsets.ModelViewSet):
-    serializer_class = BlogSerializer
+
+
+class TariffListView(viewsets.ModelViewSet):
+
+    queryset = Tarif.objects.all()
+    serializer_class = TariffSerializer
     permission_classes = [permissions.IsAuthenticated]
 
     def get_queryset(self):
-        return Blog.objects.filter()
+        slug = self.request.query_params.get("slug")  # Space slug'ini olish
+        if slug:
+            return self.queryset.filter(space__slug=slug)
+        return self.queryset
+  
     
-# class JihozViewSet(viewsets.ModelViewSet):
-#     serializer_class = JihozSerializer
-#     permission_classes = [permissions.IsAuthenticated]
+class BlogViewSet(viewsets.ModelViewSet):
+   
+    queryset = Blog.objects.all().order_by("-date")
+    serializer_class = BlogSerializer
+    permission_classes = [permissions.IsAuthenticated]
 
-#     def get_queryset(self):
-#         return Jihoz.objects.filter()
+
+    
+from rest_framework import status
+from rest_framework.views import APIView
+
+class LatestThreeBlogsView(APIView):
+    def get(self, request, *args, **kwargs):
+        blogs = Blog.objects.order_by('-date')[:3]  # Oxirgi 3 blogni chiqaradi
+        serializer = BlogSerializer(blogs, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
+class AllBlogsView(APIView):
+    def get(self, request, *args, **kwargs):
+        blogs = Blog.objects.all().order_by('-date')  # Hammasini chiqaradi
+        serializer = BlogSerializer(blogs, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)

@@ -1,6 +1,15 @@
 from rest_framework import serializers
-from .models import OurTeam,Rezident,Space,Faq, Blog, Jihoz
+from .models import OurTeam,Rezident,Space,Faq, Blog, Jihoz,Tarif
 from rest_framework import serializers
+
+class TariffSerializer(serializers.ModelSerializer):
+
+    space_name = serializers.CharField(source="space.name", read_only=True)
+
+    class Meta:
+        model = Tarif
+        fields = ["id", "name", "price", "space_name"]
+
 
 class JihozSerializer(serializers.ModelSerializer):
     equipment_uz = serializers.CharField(source='total_uz') 
@@ -20,18 +29,23 @@ class JihozSerializer(serializers.ModelSerializer):
 
 class SpaceSerializer(serializers.ModelSerializer):
     equipments = JihozSerializer(many=True, source='jihozlar') 
-    
+    plans = TariffSerializer(many=True, source='tariflar')   #ish nomini to'g'ri ko'rsating
+
     class Meta:
         model = Space
         fields = [
-            'id', 
-            'space_uz', 
-            'space_en', 
-            'space_ru', 
-            'page_slug', 
-            'image',
-            'equipments',
+                'id', 
+                'space_uz', 
+                'space_en', 
+                'space_ru', 
+                'page_slug', 
+                'image',
+                'equipments',
+                'plans',
         ]
+
+
+
 
 
 class FaqSerializer(serializers.ModelSerializer):
@@ -76,6 +90,18 @@ class BlogSerializer(serializers.ModelSerializer):
     
     def create(self, validated_data):
         return Blog.objects.create(**validated_data)
+    
+class BlogListSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Blog
+        fields = [
+            "id",
+            "title",
+            "slug",
+            "created_at",
+        ]
+
+
 
 class OurTeamSerializer(serializers.ModelSerializer):
     class Meta:
@@ -115,6 +141,7 @@ class RezidentSerializer(serializers.ModelSerializer):
 
     def create(self, validated_data):
         return Rezident.objects.create(**validated_data)
+
 
 
 

@@ -1,11 +1,20 @@
 from django.contrib import admin
-from .models import Space, Faq,OurTeam,Rezident,Blog,Jihoz
+from .models import Space, Faq,OurTeam,Rezident,Blog,Jihoz,Tarif
 from django.utils.html import format_html
 
 def img(self, obj):
     if obj.image:  
         return format_html('<img width="100" height="100" src="{}" />'.format(obj.image.url))
     return "No Image"
+
+
+class TarifInline(admin.TabularInline):  # Changed from ModelAdmin to TabularInline
+    model = Tarif 
+    fields = ("name", "duration", "description", "price")
+    verbose_name = "тариф"
+    verbose_name_plural = "тариф"
+
+
 
 class JihozInline(admin.TabularInline):
     model = Jihoz 
@@ -22,8 +31,9 @@ class SpaceAdmin(admin.ModelAdmin):
 
     readonly_fields = ('page_slug',)
     
-    inlines = [JihozInline]
+    inlines = [JihozInline,TarifInline]
     
+
     fieldsets = (
         ("Основная информация", {
             "fields": ("space", "space_uz", "space_ru", "space_en", "image", "page_slug"),
