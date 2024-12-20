@@ -44,13 +44,13 @@ class SpaceAdmin(admin.ModelAdmin):
     def img(self, obj):
         return format_html('<img width="100" height="100" src="{}" />'.format(obj.image.url))
 
-
 @admin.register(Faq)
 class FaqAdmin(admin.ModelAdmin):
-    list_display = ('id', 'title', 'page_slug')
-    search_fields = ('title', 'page_slug')
+    list_display = ('id', 'page_slug','title')
+    search_fields = ('page_slug','title')
     readonly_fields = ('page_slug',)
 
+    
 @admin.register(Rezident)
 class RezidentAdmin(admin.ModelAdmin):
     list_display = ('id','name', 'job', 'description','img')

@@ -4,23 +4,6 @@ from django.utils.translation import gettext_lazy as _
 from django.utils.text import slugify
 from unidecode import unidecode
 
-#2
-class Faq(models.Model):
-    title = models.CharField(max_length=300, verbose_name="Заголовок")
-    text = RichTextField(verbose_name="Текст")
-    page_slug = models.SlugField(unique=True, blank=True, editable=False, verbose_name="Слаг страницы")
-
-    def save(self, *args, **kwargs):
-        self.page_slug = slugify(unidecode(self.title))
-        super().save(*args, **kwargs)
-
-    class Meta:
-        verbose_name = _("Часто задаваемые вопросы")
-        verbose_name_plural = _("Часто задаваемые вопросы")
-    
-    def __str__(self):
-        return f"{self.title}"
-    
 
 #3
 class Blog(models.Model):
@@ -93,6 +76,24 @@ class Tarif(models.Model):
     description = models.TextField()
     price = models.DecimalField(max_digits=10, decimal_places=2)
 
+
+class Faq(models.Model):
+    title = models.CharField(max_length=300, verbose_name="Заголовок")
+    page_slug = models.SlugField(unique=True, blank=True, editable=False, verbose_name="Слаг страницы")
+    text = RichTextField(verbose_name="Текст")
+    space = models.ForeignKey(Space,on_delete=models.CASCADE,verbose_name="Место")
+
+
+    def save(self, *args, **kwargs):
+        self.page_slug = slugify(unidecode(self.title))
+        super().save(*args, **kwargs)
+
+    class Meta:
+        verbose_name = _("Часто задаваемые вопросы")
+        verbose_name_plural = _("Часто задаваемые вопросы")
+    
+    def __str__(self):
+        return f"{self.title}"
 
 class Jihoz(models.Model):
     space = models.ForeignKey(

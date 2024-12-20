@@ -52,25 +52,44 @@ class TariffListView(viewsets.ModelViewSet):
         return self.queryset
   
     
-class BlogViewSet(viewsets.ModelViewSet):
+# class BlogViewSet(viewsets.ModelViewSet):
    
-    queryset = Blog.objects.all().order_by("-date")
-    serializer_class = BlogSerializer
+#     queryset = Blog.objects.all().order_by("-date")
+#     serializer_class = BlogSerializer
     permission_classes = [permissions.IsAuthenticated]
 
-
-    
-from rest_framework import status
 from rest_framework.views import APIView
+from rest_framework.response import Response
+from rest_framework import status
+from .models import Blog
+from .serializers import BlogSerializer
+from rest_framework import viewsets, status
+from rest_framework.response import Response
+from .models import Blog
+from .serializers import BlogSerializer
 
-class LatestThreeBlogsView(APIView):
-    def get(self, request, *args, **kwargs):
-        blogs = Blog.objects.order_by('-date')[:3]  # Oxirgi 3 blogni chiqaradi
-        serializer = BlogSerializer(blogs, many=True)
-        return Response(serializer.data, status=status.HTTP_200_OK)
 
-class AllBlogsView(APIView):
-    def get(self, request, *args, **kwargs):
-        blogs = Blog.objects.all().order_by('-date')  # Hammasini chiqaradi
-        serializer = BlogSerializer(blogs, many=True)
+class BlogViewSet(viewsets.ModelViewSet):
+    queryset = Blog.objects.all()
+    serializer_class = BlogSerializer
+
+    def list(self, request, *args, **kwargs):
+        # Query param dan 'limit' ni olish, default 10 ta blog qaytariladi
+        limit = request.query_params.get('limit', 10)
+        try:
+            limit = int(limit)  # Limitni son turiga o'zgartirish
+            if limit <= 0:  # Manfiy yoki 0 bo'lsa, noto'g'ri qiymat xabari
+                return Response(
+                    {"error": "Limit must be a positive integer."},
+                    status=status.HTTP_400_BAD_REQUEST
+                )
+        except ValueError:
+            return Response(
+                {"error": "Limit must be an integer."},
+                status=status.HTTP_400_BAD_REQUEST
+            )
+
+        # Bloglarni olish
+        blogs = Blog.objects.all().order_by('-date')[:limit]
+        serializer = self.get_serializer(blogs, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)

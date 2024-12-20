@@ -13,8 +13,7 @@ from Collabrium.views import (
     RezidentSerializerViewSet,
     BlogViewSet,
     TariffListView,
-    LatestThreeBlogsView,
-    AllBlogsView,
+ 
 )
 
 schema_view = get_schema_view(
@@ -52,9 +51,10 @@ urlpatterns = [
     path("ourteam/<int:pk>/", OurTeamSerializerViewSet.as_view({'get': 'retrieve'}), name="ourteam-detail"),
 
     # Blog
+    path("blog", BlogViewSet.as_view({'get': 'list'}), name="blog-details"),
     path("blog/<int:pk>/", BlogViewSet.as_view({'get': 'retrieve'}), name="blog-detail"),
-    path("blog/latest-three/", LatestThreeBlogsView.as_view(), name="latest-three-blogs"),
-    path("blog/all/", AllBlogsView.as_view(), name="all-blogs"),
+    # path("blog/latest-three/", LatestThreeBlogsView.as_view(), name="latest-three-blogs"),
+    # path("blog/all/", AllBlogsView.as_view(), name="all-blogs"),
 
     # Tariff
     path("tariffs/", TariffListView.as_view({'get': 'list'})),
