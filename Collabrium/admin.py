@@ -23,7 +23,6 @@ class JihozInline(admin.TabularInline):
     verbose_name_plural = "Инструмент"
 
 
-
 @admin.register(Space)
 class SpaceAdmin(admin.ModelAdmin):
     list_display = ('space', 'page_slug', 'image')
@@ -46,11 +45,15 @@ class SpaceAdmin(admin.ModelAdmin):
 
 @admin.register(Faq)
 class FaqAdmin(admin.ModelAdmin):
-    list_display = ('id', 'page_slug','title')
-    search_fields = ('page_slug','title')
+    list_display = ('id', 'title', 'page_slug', 'get_space')
+    search_fields = ('title', 'page_slug', 'space__space')  
     readonly_fields = ('page_slug',)
 
-    
+    def get_space(self, obj):
+        return obj.space.space if obj.space else "No Space"
+    get_space.short_description = 'Space'
+
+
 @admin.register(Rezident)
 class RezidentAdmin(admin.ModelAdmin):
     list_display = ('id','name', 'job', 'description','img')
