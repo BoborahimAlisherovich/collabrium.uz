@@ -1,11 +1,20 @@
 from django.contrib import admin
-from .models import Space, Faq,OurTeam,Rezident,Blog,Jihoz
+from .models import Space, Faq,OurTeam,Rezident,Blog,Jihoz,Tarif,Plansedescription
 from django.utils.html import format_html
 
 def img(self, obj):
     if obj.image:  
         return format_html('<img width="100" height="100" src="{}" />'.format(obj.image.url))
     return "No Image"
+
+
+class TarifInline(admin.TabularInline):  # Changed from ModelAdmin to TabularInline
+    model = Tarif 
+    fields = ("name","name_uz","name_en","name_ru", "duration","duration_uz","duration_en","duration_ru", "price")
+    verbose_name = "тариф"
+    verbose_name_plural = "тариф"
+
+
 
 class JihozInline(admin.TabularInline):
     model = Jihoz 
@@ -21,8 +30,9 @@ class SpaceAdmin(admin.ModelAdmin):
 
     readonly_fields = ('page_slug',)
     
-    inlines = [JihozInline]
+    inlines = [JihozInline,TarifInline]
     
+
     fieldsets = (
         ("Основная информация", {
             "fields": ("space", "space_uz", "space_ru", "space_en", "image", "page_slug"),
@@ -33,7 +43,6 @@ class SpaceAdmin(admin.ModelAdmin):
     def img(self, obj):
         return format_html('<img width="100" height="100" src="{}" />'.format(obj.image.url))
 
-
 @admin.register(Faq)
 class FaqAdmin(admin.ModelAdmin):
     list_display = ('id', 'title', 'page_slug', 'get_space')
@@ -43,6 +52,7 @@ class FaqAdmin(admin.ModelAdmin):
     def get_space(self, obj):
         return obj.space.space if obj.space else "No Space"
     get_space.short_description = 'Space'
+
 
 @admin.register(Rezident)
 class RezidentAdmin(admin.ModelAdmin):
@@ -63,3 +73,10 @@ class BlogAdmin(admin.ModelAdmin):
     list_display = ('title', 'image_cover', 'date')
     search_fields = ('title',)
     readonly_fields = ('page_slug',)
+
+
+
+@admin.register(Plansedescription)
+class PlansedescriptionAdmin(admin.ModelAdmin):
+    list_display = ('description',)
+    search_fields = ('description',)

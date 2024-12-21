@@ -4,7 +4,6 @@ from django.utils.translation import gettext_lazy as _
 from django.utils.text import slugify
 from unidecode import unidecode
 
-#3
 class Blog(models.Model):
     image_cover = models.ImageField(upload_to='blog_images', verbose_name="Обложка изображения")
     date = models.DateField(auto_now_add=False, verbose_name="Дата публикации")
@@ -71,6 +70,25 @@ class Space(models.Model):
     def __str__(self):
         return self.space
 
+class Tarif(models.Model):
+    space = models.ForeignKey(Space, related_name='tariflar', on_delete=models.CASCADE)
+    name = models.CharField(max_length=100)
+    duration = models.CharField(max_length=50, help_text="Davomiylik, masalan: '1 oy', '3 oy', '1 yil'",blank=True,null=True)
+    price = models.DecimalField(max_digits=10, decimal_places=2)
+    def __str__(self):
+        return f"{self.name}"
+
+
+class Plansedescription(models.Model):
+    description = RichTextField()
+    plans = models.ManyToManyField(
+        "Collabrium.Tarif",
+        related_name="Plansedescriptions",)
+    
+
+    # plans = models.ForeignKey(Tarif.name,on_delete=models.CASCADE,related_name='Plansedescriptions')
+    def __str__(self):
+        return f"{self.description}"
 
 class Jihoz(models.Model):
     space = models.ForeignKey(

@@ -1,6 +1,26 @@
 from rest_framework import serializers
-from .models import OurTeam,Rezident,Space,Faq, Blog, Jihoz
+from .models import OurTeam,Rezident,Space,Faq, Blog, Jihoz,Tarif,Plansedescription
 from rest_framework import serializers
+
+
+class PlansedescriptionSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Plansedescription
+        fields = ['id', 'description','description_uz','description_en','description_ru']
+
+
+class TariffSerializer(serializers.ModelSerializer):
+    descriptions = PlansedescriptionSerializer(
+        many=True, 
+        source='Plansedescriptions',  # Matches the related_name in the ManyToManyField
+        read_only=True
+    )
+
+    class Meta:
+        model = Tarif
+        fields = ['id', 'name','name_uz','name_en','name_ru', 'price', 'duration','duration_uz','duration_en','duration_ru', 'descriptions']
+
+
 
 class JihozSerializer(serializers.ModelSerializer):
     equipment_uz = serializers.CharField(source='total_uz') 
@@ -20,17 +40,19 @@ class JihozSerializer(serializers.ModelSerializer):
 
 class SpaceSerializer(serializers.ModelSerializer):
     equipments = JihozSerializer(many=True, source='jihozlar') 
-    
+    plans = TariffSerializer(many=True, source='tariflar', read_only=True)
+
     class Meta:
         model = Space
         fields = [
-            'id', 
-            'space_uz', 
-            'space_en', 
-            'space_ru', 
-            'page_slug', 
-            'image',
-            'equipments',
+                'id', 
+                'space_uz', 
+                'space_en', 
+                'space_ru', 
+                'page_slug', 
+                'image',
+                'equipments',
+                'plans',
         ]
 
 
@@ -80,6 +102,18 @@ class BlogSerializer(serializers.ModelSerializer):
     
     def create(self, validated_data):
         return Blog.objects.create(**validated_data)
+    
+class BlogListSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Blog
+        fields = [
+            "id",
+            "title",
+            "slug",
+            "created_at",
+        ]
+
+
 
 class OurTeamSerializer(serializers.ModelSerializer):
     class Meta:

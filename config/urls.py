@@ -6,20 +6,21 @@ from rest_framework import permissions
 from django.conf import settings
 from django.conf.urls.static import static
 
-
 from Collabrium.views import (
     SpaceViewSet,
     FaqViewSet,
     OurTeamSerializerViewSet,
     RezidentSerializerViewSet,
     BlogViewSet,
+    TariffListView,
+ 
 )
 
 schema_view = get_schema_view(
     openapi.Info(
         title="Collabrium.uz",
         default_version='v1',
-        description="Restaurants and Stores delivery service",
+        description="Coworking space management platform",
         contact=openapi.Contact(email="collabrium77@gmail.com"),
         license=openapi.License(name="BSD License"),
     ),
@@ -33,34 +34,30 @@ urlpatterns = [
     path("swagger/", schema_view.with_ui("swagger", cache_timeout=0), name="schema-swagger-ui"),
     path("redoc/", schema_view.with_ui("redoc", cache_timeout=0), name="schema-redoc"),
 
-    # Space 
+    # Spaces
     path("spaces/", SpaceViewSet.as_view({'get': 'list'})),
-    path("spaces/<int:pk>/", SpaceViewSet.as_view({
-        'get': 'retrieve',
-    }), name="space-detail"),
+    path("spaces/<int:pk>/", SpaceViewSet.as_view({'get': 'retrieve'}), name="space-detail"),
 
-    # FAQ 
+    # FAQs
     path("faqs/", FaqViewSet.as_view({'get': 'list'})),
-    path("faqs/<int:pk>/", FaqViewSet.as_view({
-        'get': 'retrieve',
-    }), name="faq-detail"),
+    path("faqs/<int:pk>/", FaqViewSet.as_view({'get': 'retrieve'}), name="faq-detail"),
 
-    # Resident 
+    # Residents
     path("rezidents/", RezidentSerializerViewSet.as_view({'get': 'list'})),
-    path("rezidents/<int:pk>/", RezidentSerializerViewSet.as_view({
-        'get': 'retrieve',
-    })),
+    path("rezidents/<int:pk>/", RezidentSerializerViewSet.as_view({'get': 'retrieve'}), name="rezident-detail"),
 
-    # OurTeam 
+    # Our Team
     path("ourteam/", OurTeamSerializerViewSet.as_view({'get': 'list'})),
-    path("ourteam/<int:pk>/", OurTeamSerializerViewSet.as_view({
-        'get': 'retrieve',
-    })),
+    path("ourteam/<int:pk>/", OurTeamSerializerViewSet.as_view({'get': 'retrieve'}), name="ourteam-detail"),
 
     # Blog
-    path("blog/", BlogViewSet.as_view({'get': 'list'})),
-    path("blog/<int:pk>/", BlogViewSet.as_view({
-        'get': 'retrieve',
-    })),
- 
-]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+    path("blog", BlogViewSet.as_view({'get': 'list'}), name="blog-details"),
+    path("blog/<int:pk>/", BlogViewSet.as_view({'get': 'retrieve'}), name="blog-detail"),
+    # path("blog/latest-three/", LatestThreeBlogsView.as_view(), name="latest-three-blogs"),
+    # path("blog/all/", AllBlogsView.as_view(), name="all-blogs"),
+
+    # Tariff
+    path("tariffs/", TariffListView.as_view({'get': 'list'})),
+    path("tariffs/<int:pk>/", TariffListView.as_view({'get': 'retrieve'}), name="tariff-detail"),
+    
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
