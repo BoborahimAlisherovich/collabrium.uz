@@ -4,24 +4,6 @@ from django.utils.translation import gettext_lazy as _
 from django.utils.text import slugify
 from unidecode import unidecode
 
-#2
-class Faq(models.Model):
-    title = models.CharField(max_length=300, verbose_name="Заголовок")
-    text = RichTextField(verbose_name="Текст")
-    page_slug = models.SlugField(unique=True, blank=True, editable=False, verbose_name="Слаг страницы")
-
-    def save(self, *args, **kwargs):
-        self.page_slug = slugify(unidecode(self.title))
-        super().save(*args, **kwargs)
-
-    class Meta:
-        verbose_name = _("Часто задаваемые вопросы")
-        verbose_name_plural = _("Часто задаваемые вопросы")
-    
-    def __str__(self):
-        return f"{self.title}"
-    
-
 #3
 class Blog(models.Model):
     image_cover = models.ImageField(upload_to='blog_images', verbose_name="Обложка изображения")
@@ -85,6 +67,9 @@ class Space(models.Model):
     class Meta:
         verbose_name = _("Зона")
         verbose_name_plural = _("Зона")
+    
+    def __str__(self):
+        return self.space
 
 
 class Jihoz(models.Model):
@@ -103,3 +88,27 @@ class Jihoz(models.Model):
     class Meta:
         verbose_name = _("Подкаст")
         verbose_name_plural = _("Подкасты")
+
+class Faq(models.Model):
+    title = models.CharField(max_length=300, verbose_name="Заголовок")
+    text = models.TextField(verbose_name="Текст")
+    page_slug = models.SlugField(unique=True, blank=True, editable=False, verbose_name="Слаг страницы")
+    space = models.ForeignKey(Space, on_delete=models.CASCADE, verbose_name="Зона", null=True, blank=True)
+
+    def save(self, *args, **kwargs):
+        if not self.space:
+            self.space, _ = Space.objects.get_or_create(space="home", defaults={"page_slug": "home"})
+        if not self.page_slug:
+            self.page_slug = slugify(unidecode(self.title))
+        super().save(*args, **kwargs)
+
+    @property
+    def space_name(self):
+        return self.space.space
+
+    class Meta:
+        verbose_name = _("Часто задаваемые вопросы")
+        verbose_name_plural = _("Часто задаваемые вопросы")
+
+    def __str__(self):
+        return self.title

@@ -35,6 +35,8 @@ class SpaceSerializer(serializers.ModelSerializer):
 
 
 class FaqSerializer(serializers.ModelSerializer):
+    space = serializers.CharField(source='space.space', read_only=True)
+
     class Meta:
         model = Faq
         fields = [
@@ -44,7 +46,9 @@ class FaqSerializer(serializers.ModelSerializer):
             'title_ru', 
             'text_uz', 
             'text_en', 
-            'text_ru'
+            'text_ru',
+            'page_slug',
+            'space'
             ]
     
     def create(self, validated_data):
@@ -115,9 +119,3 @@ class RezidentSerializer(serializers.ModelSerializer):
 
     def create(self, validated_data):
         return Rezident.objects.create(**validated_data)
-
-
-
-
-
-
