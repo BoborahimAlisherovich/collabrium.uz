@@ -79,7 +79,7 @@ class Tarif(models.Model):
 
 
 class Plansedescription(models.Model):
-    description = RichTextField()
+    description = models.TextField()
     plans = models.ManyToManyField(
         "Collabrium.Tarif",
         related_name="Plansedescriptions",)
