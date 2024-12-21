@@ -1,5 +1,5 @@
 from modeltranslation.translator import register, TranslationOptions
-from .models import Space, Faq, OurTeam, Rezident, Blog,Jihoz,Tarif
+from .models import Space, Faq, OurTeam, Rezident, Blog,Jihoz,Tarif,Plansedescription
 
 @register(Space)
 class NewsTranslationOptions(TranslationOptions):
@@ -25,7 +25,11 @@ class NewsTranslationOptions(TranslationOptions):
 class NewsTranslationOptions(TranslationOptions):  
     fields = ('total',)
 
-# @register(Tarif)
-# class NewsTranslationOptions(TranslationOptions):  
-#     fields = ('name','description')
+@register(Tarif)
+class NewsTranslationOptions(TranslationOptions):  
+    fields = ('name','duration')
+
+@register(Plansedescription)
+class NewsTranslationOptions(TranslationOptions):  
+    fields = ('description',)
 

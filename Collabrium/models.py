@@ -73,8 +73,22 @@ class Tarif(models.Model):
     space = models.ForeignKey(Space, related_name='tariflar', on_delete=models.CASCADE)
     name = models.CharField(max_length=100)
     duration = models.CharField(max_length=50, help_text="Davomiylik, masalan: '1 oy', '3 oy', '1 yil'",blank=True,null=True)
-    description = models.TextField()
     price = models.DecimalField(max_digits=10, decimal_places=2)
+    def __str__(self):
+        return f"{self.name}"
+
+
+class Plansedescription(models.Model):
+    description = RichTextField()
+    plans = models.ManyToManyField(
+        "Collabrium.Tarif",
+        related_name="Plansedescriptions",)
+    
+
+    # plans = models.ForeignKey(Tarif.name,on_delete=models.CASCADE,related_name='Plansedescriptions')
+    def __str__(self):
+        return f"{self.description}"
+
 
 
 class Faq(models.Model):

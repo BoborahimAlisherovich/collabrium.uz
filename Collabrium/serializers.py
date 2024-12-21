@@ -1,14 +1,25 @@
 from rest_framework import serializers
-from .models import OurTeam,Rezident,Space,Faq, Blog, Jihoz,Tarif
+from .models import OurTeam,Rezident,Space,Faq, Blog, Jihoz,Tarif,Plansedescription
 from rest_framework import serializers
 
-class TariffSerializer(serializers.ModelSerializer):
 
-    space_name = serializers.CharField(source="space.name", read_only=True)
+class PlansedescriptionSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Plansedescription
+        fields = ['id', 'description','description_uz','description_en','description_ru']
+
+
+class TariffSerializer(serializers.ModelSerializer):
+    descriptions = PlansedescriptionSerializer(
+        many=True, 
+        source='Plansedescriptions',  # Matches the related_name in the ManyToManyField
+        read_only=True
+    )
 
     class Meta:
         model = Tarif
-        fields = ["id", "name", "price", "space_name"]
+        fields = ['id', 'name','name_uz','name_en','name_ru', 'price', 'duration','duration_uz','duration_en','duration_ru', 'descriptions']
+
 
 
 class JihozSerializer(serializers.ModelSerializer):
@@ -29,7 +40,7 @@ class JihozSerializer(serializers.ModelSerializer):
 
 class SpaceSerializer(serializers.ModelSerializer):
     equipments = JihozSerializer(many=True, source='jihozlar') 
-    plans = TariffSerializer(many=True, source='tariflar')   #ish nomini to'g'ri ko'rsating
+    plans = TariffSerializer(many=True, source='tariflar', read_only=True)
 
     class Meta:
         model = Space

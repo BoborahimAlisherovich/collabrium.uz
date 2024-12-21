@@ -4,7 +4,7 @@ from rest_framework import permissions
 from .serializers import RezidentSerializer,OurTeamSerializer, SpaceSerializer,FaqSerializer, BlogSerializer,TariffSerializer
 from .models import Space,Faq,OurTeam,Rezident, Blog,Tarif
 from rest_framework.response import Response
-
+from rest_framework import status
 
 class SpaceViewSet(viewsets.ModelViewSet):
     serializer_class = SpaceSerializer
@@ -35,8 +35,7 @@ class RezidentSerializerViewSet(viewsets.ModelViewSet):
 
     def get_queryset(self):
         return Rezident.objects.filter()
-# Tariff View
-
+    
 
 
 class TariffListView(viewsets.ModelViewSet):
@@ -50,24 +49,8 @@ class TariffListView(viewsets.ModelViewSet):
         if slug:
             return self.queryset.filter(space__slug=slug)
         return self.queryset
-  
-    
-# class BlogViewSet(viewsets.ModelViewSet):
-   
-#     queryset = Blog.objects.all().order_by("-date")
-#     serializer_class = BlogSerializer
+
     permission_classes = [permissions.IsAuthenticated]
-
-from rest_framework.views import APIView
-from rest_framework.response import Response
-from rest_framework import status
-from .models import Blog
-from .serializers import BlogSerializer
-from rest_framework import viewsets, status
-from rest_framework.response import Response
-from .models import Blog
-from .serializers import BlogSerializer
-
 
 class BlogViewSet(viewsets.ModelViewSet):
     queryset = Blog.objects.all()

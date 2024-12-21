@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Space, Faq,OurTeam,Rezident,Blog,Jihoz,Tarif
+from .models import Space, Faq,OurTeam,Rezident,Blog,Jihoz,Tarif,Plansedescription
 from django.utils.html import format_html
 
 def img(self, obj):
@@ -10,7 +10,7 @@ def img(self, obj):
 
 class TarifInline(admin.TabularInline):  # Changed from ModelAdmin to TabularInline
     model = Tarif 
-    fields = ("name", "duration", "description", "price")
+    fields = ("name","name_uz","name_en","name_ru", "duration","duration_uz","duration_en","duration_ru", "price")
     verbose_name = "тариф"
     verbose_name_plural = "тариф"
 
@@ -70,3 +70,10 @@ class BlogAdmin(admin.ModelAdmin):
     list_display = ('title', 'image_cover', 'date')
     search_fields = ('title',)
     readonly_fields = ('page_slug',)
+
+
+
+@admin.register(Plansedescription)
+class PlansedescriptionAdmin(admin.ModelAdmin):
+    list_display = ('description',)
+    search_fields = ('description',)
