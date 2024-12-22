@@ -57,11 +57,10 @@ class BlogViewSet(viewsets.ModelViewSet):
     serializer_class = BlogSerializer
 
     def list(self, request, *args, **kwargs):
-        # Query param dan 'limit' ni olish, default 10 ta blog qaytariladi
         limit = request.query_params.get('limit', 10)
         try:
-            limit = int(limit)  # Limitni son turiga o'zgartirish
-            if limit <= 0:  # Manfiy yoki 0 bo'lsa, noto'g'ri qiymat xabari
+            limit = int(limit)  
+            if limit <= 0:  
                 return Response(
                     {"error": "Limit must be a positive integer."},
                     status=status.HTTP_400_BAD_REQUEST
@@ -72,7 +71,7 @@ class BlogViewSet(viewsets.ModelViewSet):
                 status=status.HTTP_400_BAD_REQUEST
             )
 
-        # Bloglarni olish
+     
         blogs = Blog.objects.all().order_by('-date')[:limit]
         serializer = self.get_serializer(blogs, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)

@@ -85,8 +85,6 @@ class Plansedescription(models.Model):
         "Collabrium.Tarif",
         related_name="Plansedescriptions",)
     
-
-    # plans = models.ForeignKey(Tarif.name,on_delete=models.CASCADE,related_name='Plansedescriptions')
     def __str__(self):
         return f"{self.description}"
 

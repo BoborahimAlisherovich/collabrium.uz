@@ -8,7 +8,7 @@ def img(self, obj):
     return "No Image"
 
 
-class TarifInline(admin.TabularInline):  # Changed from ModelAdmin to TabularInline
+class TarifInline(admin.TabularInline):  
     model = Tarif 
     fields = ("name","name_uz","name_en","name_ru", "duration","duration_uz","duration_en","duration_ru", "price")
     verbose_name = "тариф"
