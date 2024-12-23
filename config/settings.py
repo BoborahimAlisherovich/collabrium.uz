@@ -140,12 +140,24 @@ MODELTRANSLATION_DEFAULT_LANGUAGE = 'ru'
 
 LOCALE_PATHS = (BASE_DIR / 'locale',)
 
+
+STATIC_URL = 'static/'
+STATICFILES_DIRS =[
+    BASE_DIR / 'static/'
+]
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
 
-STATIC_URL = "static/"
+
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+JAZZMIN_SETTINGS = {
+    "site_title": "Collabrium Admin",
+    "site_header": "Collabrium",
+    "site_logo": "imaga\imagecollabriumrasm.png",
+   
+}

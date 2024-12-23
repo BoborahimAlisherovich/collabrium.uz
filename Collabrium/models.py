@@ -80,13 +80,16 @@ class Tarif(models.Model):
 
 
 class Plansedescription(models.Model):
-    description = models.TextField()
+    description = models.CharField(max_length=200,verbose_name="текст")
     plans = models.ManyToManyField(
         "Collabrium.Tarif",
-        related_name="Plansedescriptions",)
+        related_name="Plansedescriptions",verbose_name="подписка")
     
     def __str__(self):
         return f"{self.description}"
+    class Meta:
+        verbose_name = _("Услуга")
+        verbose_name_plural = _("Услуга")
 
 class Jihoz(models.Model):
     space = models.ForeignKey(

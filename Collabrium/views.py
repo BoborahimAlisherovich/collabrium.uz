@@ -12,15 +12,25 @@ class SpaceViewSet(viewsets.ModelViewSet):
 
     def get_queryset(self):
         return Space.objects.filter()
-
-
 class FaqViewSet(viewsets.ModelViewSet):
     serializer_class = FaqSerializer
     permission_classes = [permissions.IsAuthenticated]
 
     def get_queryset(self):
-        return Faq.objects.filter()
-
+        category = self.request.query_params.get("category") 
+        title = self.request.query_params.get("title")  
+        
+        queryset = Faq.objects.all()
+        
+        if category:
+            queryset = queryset.filter(space__slug=category)  # filter by 'slug' of the related Space
+        
+        if title:
+            queryset = queryset.filter(title_uz__icontains=title) | \
+                       queryset.filter(title_en__icontains=title) | \
+                       queryset.filter(title_ru__icontains=title)
+        
+        return queryset
 
 class OurTeamSerializerViewSet(viewsets.ModelViewSet):
     serializer_class = OurTeamSerializer
@@ -39,7 +49,6 @@ class RezidentSerializerViewSet(viewsets.ModelViewSet):
 
 
 class TariffListView(viewsets.ModelViewSet):
-
     queryset = Tarif.objects.all()
     serializer_class = TariffSerializer
     permission_classes = [permissions.IsAuthenticated]
@@ -49,7 +58,6 @@ class TariffListView(viewsets.ModelViewSet):
         if slug:
             return self.queryset.filter(space__slug=slug)
         return self.queryset
-
     permission_classes = [permissions.IsAuthenticated]
 
 class BlogViewSet(viewsets.ModelViewSet):

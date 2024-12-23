@@ -15,10 +15,11 @@ class TariffSerializer(serializers.ModelSerializer):
         source='Plansedescriptions',  # Matches the related_name in the ManyToManyField
         read_only=True
     )
+    space_slug = serializers.CharField(source='space.page_slug', read_only=True)
 
     class Meta:
         model = Tarif
-        fields = ['id', 'name','name_uz','name_en','name_ru', 'price', 'duration','duration_uz','duration_en','duration_ru', 'services']
+        fields = ['id', 'name','name_uz','name_en','name_ru', 'price', 'duration','duration_uz','duration_en','duration_ru', 'space_slug','services']
 
 
 
