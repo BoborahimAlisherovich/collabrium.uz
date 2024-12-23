@@ -12,25 +12,18 @@ class SpaceViewSet(viewsets.ModelViewSet):
 
     def get_queryset(self):
         return Space.objects.filter()
+
 class FaqViewSet(viewsets.ModelViewSet):
     serializer_class = FaqSerializer
     permission_classes = [permissions.IsAuthenticated]
 
     def get_queryset(self):
         category = self.request.query_params.get("category") 
-        title = self.request.query_params.get("title")  
-        
         queryset = Faq.objects.all()
-        
         if category:
-            queryset = queryset.filter(space__slug=category)  # filter by 'slug' of the related Space
-        
-        if title:
-            queryset = queryset.filter(title_uz__icontains=title) | \
-                       queryset.filter(title_en__icontains=title) | \
-                       queryset.filter(title_ru__icontains=title)
-        
+            queryset = queryset.filter(category=category)
         return queryset
+
 
 class OurTeamSerializerViewSet(viewsets.ModelViewSet):
     serializer_class = OurTeamSerializer
