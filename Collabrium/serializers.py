@@ -19,6 +19,7 @@ class TariffSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Tarif
+
         fields = ['id', 'name','name_uz','name_en','name_ru', 'price', 'duration','duration_uz','duration_en','duration_ru', 'space_slug','services']
 
 

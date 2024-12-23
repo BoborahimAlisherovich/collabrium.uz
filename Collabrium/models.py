@@ -71,10 +71,14 @@ class Space(models.Model):
         return self.space
 
 class Tarif(models.Model):
-    space = models.ForeignKey(Space, related_name='tariflar', on_delete=models.CASCADE)
-    name = models.CharField(max_length=100)
-    duration = models.CharField(max_length=50, help_text="Davomiylik, masalan: '1 oy', '3 oy', '1 yil'",blank=True,null=True)
-    price = models.DecimalField(max_digits=10, decimal_places=2)
+    space = models.ForeignKey(Space, related_name='Определения', on_delete=models.CASCADE)
+    name = models.CharField(max_length=100,verbose_name="Имя")
+    duration = models.CharField(max_length=50, help_text="Davomiylik, masalan: '1 oy', '3 oy', '1 yil'",blank=True,null=True,verbose_name="Продолжительность")
+    price = models.DecimalField(max_digits=10, decimal_places=2,verbose_name="Цена")
+
+    class Meta:
+        verbose_name = _("Определение")
+        verbose_name_plural = _("Определения")
     def __str__(self):
         return f"{self.name}"
 
@@ -87,6 +91,7 @@ class Plansedescription(models.Model):
     
     def __str__(self):
         return f"{self.description}"
+    
     class Meta:
         verbose_name = _("Услуга")
         verbose_name_plural = _("Услуга")
@@ -110,7 +115,7 @@ class Jihoz(models.Model):
 
 class Faq(models.Model):
     title = models.CharField(max_length=300, verbose_name="Заголовок")
-    text = models.TextField(verbose_name="Текст")
+    text = RichTextField(verbose_name="Текст")
     page_slug = models.SlugField(unique=True, blank=True, editable=False, verbose_name="Слаг страницы")
     space = models.ForeignKey(Space, on_delete=models.CASCADE, verbose_name="Зона", null=True, blank=True)
 
