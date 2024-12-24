@@ -86,22 +86,39 @@ class TariffListView(viewsets.ModelViewSet):
     serializer_class = TariffSerializer
     permission_classes = [permissions.IsAuthenticated]
 
-    def get_queryset(self):
-        slug = self.request.query_params.get("slug")  # Space slug'ini olish
+    @swagger_auto_schema(
+        operation_description="Retrieve tariffs optionally filtered by space slug.",
+        manual_parameters=[
+            openapi.Parameter(
+                'slug',
+                openapi.IN_QUERY,
+                description="Slug of the space to filter tariffs.",
+                type=openapi.TYPE_STRING,
+            )
+        ],
+        responses={200: TariffSerializer(many=True)}
+    )
+    def list(self, request, *args, **kwargs):
+        slug = request.query_params.get("slug")
+        queryset = self.get_queryset()
+
         if slug:
-            return self.queryset.filter(space__slug=slug)
+            queryset = queryset.filter(space__page_slug=slug)
+
+        serializer = self.get_serializer(queryset, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
+    def get_queryset(self):
         return self.queryset
-    permission_classes = [permissions.IsAuthenticated]
 
 
-from drf_yasg.utils import swagger_auto_schema
-from drf_yasg import openapi
+
+
 
 class BlogViewSet(viewsets.ModelViewSet):
-    queryset = Blog.objects.all()
+    queryset = Blog.objects.all().order_by('-id')
     serializer_class = BlogSerializer
 
-    # Swagger documentation for the "limit" query parameter
     @swagger_auto_schema(
         operation_description="Retrieve a list of blogs with an optional limit on the number of blogs returned. Defaults to 10.",
         manual_parameters=[
@@ -138,7 +155,6 @@ class BlogViewSet(viewsets.ModelViewSet):
                 status=status.HTTP_400_BAD_REQUEST
             )
 
-        # Retrieve blogs with the specified limit
-        blogs = Blog.objects.all().order_by('-date')[:limit]
+        blogs = Blog.objects.all().order_by('-id')[:limit]
         serializer = self.get_serializer(blogs, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)

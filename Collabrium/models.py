@@ -24,8 +24,8 @@ class Blog(models.Model):
         return self.title
     
     class Meta:
-        verbose_name = _("6- Блог")
-        verbose_name_plural = _("6- Блог")
+        verbose_name = _("Блог")
+        verbose_name_plural = _("Блог")
 
 #4
 class OurTeam(models.Model):
@@ -34,8 +34,8 @@ class OurTeam(models.Model):
     job = models.CharField(max_length=200,verbose_name="Работа")
     description = models.TextField(verbose_name="описание")
     class Meta:
-        verbose_name = _("4- Наша команда")
-        verbose_name_plural = _("4- Наша команда")
+        verbose_name = _("Наша команда")
+        verbose_name_plural = _("Наша команда")
 
     def __str__(self):
         return f"{self.name}"
@@ -48,8 +48,8 @@ class Rezident(models.Model):
     job = models.CharField(max_length=200,verbose_name="Работа")
     description = models.TextField(verbose_name="описание")
     class Meta:
-        verbose_name = _("5- Резидент")
-        verbose_name_plural = _("5- Резидент")
+        verbose_name = _("Резидент")
+        verbose_name_plural = _("Резидент")
 
     def __str__(self):
         return f"{self.name}"
@@ -64,8 +64,8 @@ class Space(models.Model):
         super().save(*args, **kwargs)
 
     class Meta:
-        verbose_name = _("1- Зона")
-        verbose_name_plural = _("1- Зона")
+        verbose_name = _("Зона")
+        verbose_name_plural = _("Зона")
     
     def __str__(self):
         return self.space
@@ -93,8 +93,8 @@ class Plansedescription(models.Model):
         return f"{self.description}"
     
     class Meta:
-        verbose_name = _("2- Услуга")
-        verbose_name_plural = _("2 - Услуга")
+        verbose_name = _("Услуга")
+        verbose_name_plural = _("Услуга")
 
 class Jihoz(models.Model):
     space = models.ForeignKey(
@@ -131,8 +131,8 @@ class Faq(models.Model):
         return self.space.space
 
     class Meta:
-        verbose_name = _("3- Часто задаваемые вопросы")
-        verbose_name_plural = _("3- Часто задаваемые вопросы")
+        verbose_name = _("Часто задаваемые вопросы")
+        verbose_name_plural = _("Часто задаваемые вопросы")
 
     def __str__(self):
         return self.title
