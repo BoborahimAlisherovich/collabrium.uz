@@ -60,6 +60,7 @@ class SpaceSerializer(serializers.ModelSerializer):
 
 class FaqSerializer(serializers.ModelSerializer):
     space = serializers.CharField(source='space.space', read_only=True)
+    space_slug = serializers.CharField(source='space.page_slug', read_only=True)
 
     class Meta:
         model = Faq
@@ -72,7 +73,8 @@ class FaqSerializer(serializers.ModelSerializer):
             'text_en', 
             'text_ru',
             'page_slug',
-            'space'
+            'space',
+            'space_slug'
             ]
     
     def create(self, validated_data):
@@ -151,6 +153,8 @@ class RezidentSerializer(serializers.ModelSerializer):
             'description_uz',
             'description_en',
             'description_ru',
+            'image',
+
         ]
 
     def create(self, validated_data):

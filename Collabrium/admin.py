@@ -2,6 +2,28 @@ from django.contrib import admin
 from .models import Space, Faq,OurTeam,Rezident,Blog,Jihoz,Tarif,Plansedescription
 from django.utils.html import format_html
 
+
+
+
+# Re-register models in a custom order
+class CollabriumAdminSite(admin.AdminSite):
+    site_title = "Collabrium Admin"
+    site_header = "Collabrium Administration"
+    index_title = "Collabrium Modules"
+
+    def get_app_list(self, request):
+        app_list = super().get_app_list(request)
+        for app in app_list:
+            if app['name'] == 'Collabrium':  
+                app['models'].sort(key=lambda x: [
+                    "Зона", "Услуга","Часто задаваемые вопросы", "Наша команда", "Резидент",   "Блог"
+                ].index(x['name']))
+        return app_list
+
+admin_site = CollabriumAdminSite(name='collabrium')
+
+
+
 def img(self, obj):
     if obj.image:  
         return format_html('<img width="100" height="100" src="{}" />'.format(obj.image.url))

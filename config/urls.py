@@ -18,9 +18,9 @@ from Collabrium.views import (
 
 schema_view = get_schema_view(
     openapi.Info(
-        title="Collabrium.uz",
+        title="Collabrium API",
         default_version='v1',
-        description="Coworking space management platform",
+        description="API documentation for the Collabrium platform.",
         contact=openapi.Contact(email="collabrium77@gmail.com"),
         license=openapi.License(name="BSD License"),
     ),
@@ -33,6 +33,7 @@ urlpatterns = [
     path("api-auth/", include("rest_framework.urls")),
     path("swagger/", schema_view.with_ui("swagger", cache_timeout=0), name="schema-swagger-ui"),
     path("redoc/", schema_view.with_ui("redoc", cache_timeout=0), name="schema-redoc"),
+
 
     # Spaces
     path("spaces/", SpaceViewSet.as_view({'get': 'list'})),
