@@ -1,11 +1,9 @@
 from django.contrib import admin
 from .models import Space, Faq,OurTeam,Rezident,Blog,Jihoz,Tarif,Plansedescription
 from django.utils.html import format_html
+from django.db.models import Case, When, IntegerField
 
 
-
-
-# Re-register models in a custom order
 class CollabriumAdminSite(admin.AdminSite):
     site_title = "Collabrium Admin"
     site_header = "Collabrium Administration"
@@ -23,7 +21,6 @@ class CollabriumAdminSite(admin.AdminSite):
 admin_site = CollabriumAdminSite(name='collabrium')
 
 
-
 def img(self, obj):
     if obj.image:  
         return format_html('<img width="100" height="100" src="{}" />'.format(obj.image.url))
@@ -37,7 +34,6 @@ class TarifInline(admin.TabularInline):
     verbose_name_plural = "тариф"
 
 
-
 class JihozInline(admin.TabularInline):
     model = Jihoz 
     fields = ("total","total_uz","total_ru","total_en", "image")
@@ -47,13 +43,10 @@ class JihozInline(admin.TabularInline):
 
 @admin.register(Space)
 class SpaceAdmin(admin.ModelAdmin):
-    list_display = ('space', 'page_slug', 'image')
+    list_display = ('space', 'page_slug', 'image', 'id')
     search_fields = ('space', 'page_slug')
-
     readonly_fields = ('page_slug',)
-    
-    inlines = [JihozInline,TarifInline]
-    
+    inlines = [JihozInline, TarifInline]
 
     fieldsets = (
         ("Основная информация", {
@@ -61,6 +54,19 @@ class SpaceAdmin(admin.ModelAdmin):
         }),
     )
 
+    def get_queryset(self, request):
+        """
+        Custom queryset: 'home' space qiymatini birinchi o'ringa olib keladi va ID qiymatlarini qayta tartiblaydi.
+        """
+        qs = super().get_queryset(request)
+        qs = qs.annotate(
+            custom_order=Case(
+                When(space='home', then=0),
+                default=1,
+                output_field=IntegerField(),
+            )
+        ).order_by('custom_order', 'id')  # Avval 'home', keyin boshqa qiymatlar.
+        return qs
 
     def img(self, obj):
         return format_html('<img width="100" height="100" src="{}" />'.format(obj.image.url))
@@ -95,8 +101,6 @@ class BlogAdmin(admin.ModelAdmin):
     list_display = ('title', 'image_cover', 'date')
     search_fields = ('title',)
     readonly_fields = ('page_slug',)
-
-
 
 @admin.register(Plansedescription)
 class PlansedescriptionAdmin(admin.ModelAdmin):

@@ -12,7 +12,7 @@ class PlansedescriptionSerializer(serializers.ModelSerializer):
 class TariffSerializer(serializers.ModelSerializer):
     services = PlansedescriptionSerializer(
         many=True, 
-        source='Plansedescriptions',  # Matches the related_name in the ManyToManyField
+        source='Plansedescriptions',  
         read_only=True
     )
     space_slug = serializers.CharField(source='space.page_slug', read_only=True)
@@ -47,15 +47,24 @@ class SpaceSerializer(serializers.ModelSerializer):
     class Meta:
         model = Space
         fields = [
-                'id', 
-                'space_uz', 
-                'space_en', 
-                'space_ru', 
-                'page_slug', 
-                'image',
-                'equipments',
-                'plans',
+            'id', 
+            'space_uz', 
+            'space_en', 
+            'space_ru', 
+            'page_slug', 
+            'image',
+            'equipments',
+            'plans',
         ]
+
+    def to_representation(self, instance):
+        representation = super().to_representation(instance)
+        if representation.get('page_slug') == 'home':
+            return None  # Obyektni umuman ko'rsatmaydi
+            # Agar faqat ayrim maydonlarni yashirish kerak bo'lsa:
+            # del representation['equipments']  # Jihozlar maydonini o'chiradi
+            # del representation['plans']  # Tariflar maydonini o'chiradi
+        return representation
 
 
 class FaqSerializer(serializers.ModelSerializer):
@@ -116,7 +125,6 @@ class BlogListSerializer(serializers.ModelSerializer):
             "slug",
             "created_at",
         ]
-
 
 
 class OurTeamSerializer(serializers.ModelSerializer):
