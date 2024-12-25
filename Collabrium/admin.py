@@ -55,22 +55,13 @@ class SpaceAdmin(admin.ModelAdmin):
     )
 
     def get_queryset(self, request):
-        """
-        Custom queryset: 'home' space qiymatini birinchi o'ringa olib keladi va ID qiymatlarini qayta tartiblaydi.
-        """
-        qs = super().get_queryset(request)
-        qs = qs.annotate(
-            custom_order=Case(
-                When(space='home', then=0),
-                default=1,
-                output_field=IntegerField(),
-            )
-        ).order_by('custom_order', 'id')  # Avval 'home', keyin boshqa qiymatlar.
-        return qs
+        queryset = super().get_queryset(request)
+        # page_slug va space qiymati "home" bo'lsa, shu ob'ektlarni ko'rsatmaslik
+        return queryset.exclude(page_slug='home', space='home')
 
     def img(self, obj):
         return format_html('<img width="100" height="100" src="{}" />'.format(obj.image.url))
-
+    
 @admin.register(Faq)
 class FaqAdmin(admin.ModelAdmin):
     list_display = ('id', 'title', 'page_slug', 'get_space')

@@ -39,7 +39,6 @@ class JihozSerializer(serializers.ModelSerializer):
             'image'
         ]
 
-
 class SpaceSerializer(serializers.ModelSerializer):
     equipments = JihozSerializer(many=True, source='jihozlar') 
     plans = TariffSerializer(many=True, source='tariflar', read_only=True)
@@ -60,10 +59,7 @@ class SpaceSerializer(serializers.ModelSerializer):
     def to_representation(self, instance):
         representation = super().to_representation(instance)
         if representation.get('page_slug') == 'home':
-            return None  # Obyektni umuman ko'rsatmaydi
-            # Agar faqat ayrim maydonlarni yashirish kerak bo'lsa:
-            # del representation['equipments']  # Jihozlar maydonini o'chiradi
-            # del representation['plans']  # Tariflar maydonini o'chiradi
+            return None 
         return representation
 
 
