@@ -5,15 +5,15 @@ from django.utils.text import slugify
 from unidecode import unidecode
 
 class Blog(models.Model):
-    image_cover = models.ImageField(upload_to='blog_images', verbose_name="Обложка изображения")
+    image_cover = models.ImageField(upload_to='Images/blog_images', verbose_name="Обложка изображения")
     date = models.DateField(auto_now_add=False, verbose_name="Дата публикации")
     title = models.CharField(max_length=255, verbose_name="Заголовок статьи")
     page_slug = models.SlugField(unique=True, blank=True, editable=False, verbose_name="Слаг страницы")
     main_title = models.CharField(max_length=200, verbose_name="Основной заголовок")
     text_first = RichTextField(verbose_name="Текст 1")
     text_second = RichTextField(verbose_name="Текст 2")
-    image_first = models.ImageField(upload_to='blog_images', blank=True, null=True, verbose_name="Первое изображение")
-    image_second = models.ImageField(upload_to='blog_images', blank=True, null=True, verbose_name="Второе изображение")
+    image_first = models.ImageField(upload_to='Images/blog_images', blank=True, null=True, verbose_name="Первое изображение")
+    image_second = models.ImageField(upload_to='Images/blog_images', blank=True, null=True, verbose_name="Второе изображение")
 
     
     def save(self, *args, **kwargs):
@@ -30,7 +30,7 @@ class Blog(models.Model):
 #4
 class OurTeam(models.Model):
     name = models.CharField(max_length=200,verbose_name="Имя")
-    image = models.ImageField(upload_to='OurTeam_images',verbose_name="изображение")
+    image = models.ImageField(upload_to='Images/OurTeam_images',verbose_name="изображение")
     job = models.CharField(max_length=200,verbose_name="Работа")
     description = models.TextField(verbose_name="описание")
     class Meta:
@@ -44,7 +44,7 @@ class OurTeam(models.Model):
 #5
 class Rezident(models.Model):
     name = models.CharField(max_length=200,verbose_name="Имя")
-    image = models.ImageField(upload_to='rezident_images',verbose_name="изображение")
+    image = models.ImageField(upload_to='Images/rezident_images',verbose_name="изображение")
     job = models.CharField(max_length=200,verbose_name="Работа")
     description = models.TextField(verbose_name="описание")
     class Meta:
