@@ -56,7 +56,6 @@ class SpaceAdmin(admin.ModelAdmin):
 
     def get_queryset(self, request):
         queryset = super().get_queryset(request)
-        # page_slug va space qiymati "home" bo'lsa, shu ob'ektlarni ko'rsatmaslik
         return queryset.exclude(page_slug='home', space='home')
 
     def img(self, obj):
@@ -64,7 +63,7 @@ class SpaceAdmin(admin.ModelAdmin):
     
 @admin.register(Faq)
 class FaqAdmin(admin.ModelAdmin):
-    list_display = ('id', 'title', 'page_slug', 'get_space')
+    list_display = ('title', 'page_slug', 'get_space','id')
     search_fields = ('title', 'page_slug', 'space__space')  
     readonly_fields = ('page_slug',)
 
@@ -75,14 +74,14 @@ class FaqAdmin(admin.ModelAdmin):
 
 @admin.register(Rezident)
 class RezidentAdmin(admin.ModelAdmin):
-    list_display = ('id','name', 'job', 'description','img')
+    list_display = ('name', 'job', 'description','img','id')
     search_fields = ('name',)  
     def img(self, obj):
          return format_html('<img width="100" height="100" src="{}" />'.format(obj.image.url))
 
 @admin.register(OurTeam)
 class OurTeamAdmin(admin.ModelAdmin):
-    list_display = ('id','name', 'job', 'description','img') 
+    list_display = ('name', 'job', 'description','img','id') 
     search_fields = ('name',) 
     def img(self, obj):
          return format_html('<img width="100" height="100" src="{}" />'.format(obj.image.url))

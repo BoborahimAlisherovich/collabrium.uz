@@ -12,7 +12,8 @@ class SpaceViewSet(viewsets.ModelViewSet):
     permission_classes = [permissions.IsAuthenticated]
 
     def get_queryset(self):
-        return Space.objects.filter()
+        return Space.objects.exclude(page_slug='home')
+
 
 
 class FaqViewSet(viewsets.ModelViewSet):
