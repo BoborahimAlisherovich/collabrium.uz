@@ -1,35 +1,34 @@
 from modeltranslation.translator import register, TranslationOptions
-from .models import Space, Faq, OurTeam, Rezident, Blog,Jihoz,Tarif,Plansedescription
+from .models import Space, Faq, OurTeam, Rezident, Blog, Jihoz, Tarif, Plansedescription
 
 @register(Space)
-class NewsTranslationOptions(TranslationOptions):
-    fields = ('space',) 
+class SpaceTranslationOptions(TranslationOptions):
+    fields = ('space',)
 
 @register(Faq)
-class NewsTranslationOptions(TranslationOptions):
+class FaqTranslationOptions(TranslationOptions):
     fields = ('title', 'text')
 
 @register(OurTeam)
-class NewsTranslationOptions(TranslationOptions): 
-    fields = ('name', 'description', 'job') 
+class OurTeamTranslationOptions(TranslationOptions):
+    fields = ('name', 'description', 'job')
 
 @register(Rezident)
-class NewsTranslationOptions(TranslationOptions):
-    fields = ('name', 'description', 'job') 
+class RezidentTranslationOptions(TranslationOptions):
+    fields = ('name', 'description', 'job')
 
 @register(Blog)
-class NewsTranslationOptions(TranslationOptions):  
-    fields = ('title', 'main_title', 'text_first', 'text_second') 
+class BlogTranslationOptions(TranslationOptions):
+    fields = ('title', 'main_title', 'text_first', 'text_second')
 
 @register(Jihoz)
-class NewsTranslationOptions(TranslationOptions):  
+class JihozTranslationOptions(TranslationOptions):
     fields = ('total',)
 
 @register(Tarif)
-class NewsTranslationOptions(TranslationOptions):  
-    fields = ('name','duration')
+class TarifTranslationOptions(TranslationOptions):
+    fields = ('name', 'duration')
 
 @register(Plansedescription)
-class NewsTranslationOptions(TranslationOptions):  
+class PlansedescriptionTranslationOptions(TranslationOptions):
     fields = ('description',)
-
