@@ -161,7 +161,6 @@ JAZZMIN_SETTINGS = {
     "site_title": "Collabrium Admin",
     "site_header": "Collabrium",
     'site_brand': 'Collabrium',
-    "site_logo": "imaga\imagecollabriumrasm.png",
     'copyright': 'Collabrium',
     'show_ui_builder': False,
     'show_navigation': True,
