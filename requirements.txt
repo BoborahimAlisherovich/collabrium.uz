@@ -1,6 +1,7 @@
 asgiref==3.8.1
 Django==5.1.4
 django-ckeditor==6.7.2
+django-cors-headers==4.6.0
 django-cuser==2017.3.16
 django-jazzmin==3.0.1
 django-js-asset==2.2.0

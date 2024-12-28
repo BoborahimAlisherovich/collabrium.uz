@@ -24,8 +24,8 @@ class Blog(models.Model):
         return self.title
     
     class Meta:
-        verbose_name = _("Блог")
-        verbose_name_plural = _("Блог")
+        verbose_name = _("Блог ")
+        verbose_name_plural = _("Блог ")
 
 #4
 class OurTeam(models.Model):
@@ -34,8 +34,8 @@ class OurTeam(models.Model):
     job = models.CharField(max_length=200,verbose_name="Работа")
     description = models.TextField(verbose_name="описание")
     class Meta:
-        verbose_name = _("Наша команда")
-        verbose_name_plural = _("Наша команда")
+        verbose_name = _("Наша команда ")
+        verbose_name_plural = _("Наша команда ")
 
     def __str__(self):
         return f"{self.name}"
@@ -48,8 +48,8 @@ class Rezident(models.Model):
     job = models.CharField(max_length=200,verbose_name="Работа")
     description = models.TextField(verbose_name="описание")
     class Meta:
-        verbose_name = _("Резидент")
-        verbose_name_plural = _("Резидент")
+        verbose_name = _("Резидент ")
+        verbose_name_plural = _("Резидент ")
 
     def __str__(self):
         return f"{self.name}"
@@ -64,8 +64,8 @@ class Space(models.Model):
         super().save(*args, **kwargs)
 
     class Meta:
-        verbose_name = _("Зона")
-        verbose_name_plural = _("Зона")
+        verbose_name = _("Зона ")
+        verbose_name_plural = _("Зона ")
     
     def __str__(self):
         return self.space
@@ -77,8 +77,8 @@ class Tarif(models.Model):
     price = models.DecimalField(max_digits=10, decimal_places=2,verbose_name="Цена")
 
     class Meta:
-        verbose_name = _("Определение")
-        verbose_name_plural = _("Определения")
+        verbose_name = _("Определение ")
+        verbose_name_plural = _("Определения ")
     def __str__(self):
         return f"{self.name}"
 
@@ -93,8 +93,8 @@ class Plansedescription(models.Model):
         return f"{self.description}"
     
     class Meta:
-        verbose_name = _("Услуга")
-        verbose_name_plural = _("Услуга")
+        verbose_name = _("Услуга ")
+        verbose_name_plural = _("Услуга ")
 
 class Jihoz(models.Model):
     space = models.ForeignKey(
@@ -110,8 +110,8 @@ class Jihoz(models.Model):
         return self.total
 
     class Meta:
-        verbose_name = _("Подкаст")
-        verbose_name_plural = _("Подкасты")
+        verbose_name = _("Подкаст ")
+        verbose_name_plural = _("Подкасты ")
 
 class Faq(models.Model):
     title = models.CharField(max_length=300, verbose_name="Заголовок")
@@ -131,8 +131,8 @@ class Faq(models.Model):
         return self.space.space
 
     class Meta:
-        verbose_name = _("Часто задаваемые вопросы")
-        verbose_name_plural = _("Часто задаваемые вопросы")
+        verbose_name = _("Вопросы ")
+        verbose_name_plural = _("Вопросы ")
 
     def __str__(self):
         return self.title

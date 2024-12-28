@@ -32,7 +32,7 @@ ALLOWED_HOSTS = []
 
 INSTALLED_APPS = [
     'jazzmin',
-     'modeltranslation',
+    'modeltranslation',
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
@@ -42,15 +42,16 @@ INSTALLED_APPS = [
     'Collabrium',
     'drf_yasg',
     'rest_framework',
-    'ckeditor',   
+    'ckeditor',
+    # CORS uchun kerakli kutubxona
+    'corsheaders',
 ]
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
-    #new
+    "corsheaders.middleware.CorsMiddleware",  # CORS middleware qo'shildi
     "django.middleware.locale.LocaleMiddleware",
-
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
@@ -77,9 +78,6 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = "config.wsgi.application"
-
-
-
 
 REST_FRAMEWORK = {
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
@@ -142,12 +140,12 @@ LOCALE_PATHS = (BASE_DIR / 'locale',)
 
 
 STATIC_URL = 'static/'
-STATICFILES_DIRS =[
+STATICFILES_DIRS = [
     BASE_DIR / 'static/'
 ]
+
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
-
 
 
 # Default primary key field type
@@ -155,8 +153,7 @@ STATICFILES_DIRS =[
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
-
-
+# Jazzmin sozlamalari
 JAZZMIN_SETTINGS = {
     "site_title": "Collabrium Admin",
     "site_header": "Collabrium",
@@ -166,3 +163,13 @@ JAZZMIN_SETTINGS = {
     'show_navigation': True,
     'theme': 'dark',
 }
+
+# CORS sozlamalari
+CORS_ALLOWED_ORIGINS = [
+    "https://collabrium.uz",  # API domeni
+    "https://coworking-centre.netlify.app",  # Boshqa domen
+    "http://localhost:3000",  # Frontend uchun (oxirgi '/' olib tashlandi)
+
+]
+
+CORS_ALLOW_CREDENTIALS = True  # Token yoki cookie yuborish uchun ruxsat
